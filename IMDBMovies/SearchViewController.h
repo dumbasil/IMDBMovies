@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  FirstViewController.h
 //  IMDBMovies
 //
 //  Created by Василий Думанов on 06.12.14.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface SearchViewController : UIViewController
 
 
 @end

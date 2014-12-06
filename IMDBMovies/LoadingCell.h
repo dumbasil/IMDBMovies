@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  LoadingCell.h
 //  IMDBMovies
 //
 //  Created by Василий Думанов on 06.12.14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController
-
+@interface LoadingCell : UITableViewCell
 
 @end
-

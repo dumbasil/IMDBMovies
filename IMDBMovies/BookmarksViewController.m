@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Vasily Dumanov. All rights reserved.
 //
 
-#import "SecondViewController.h"
+#import "BookmarksViewController.h"
 
-@interface SecondViewController ()
+@interface BookmarksViewController ()
 
 @end
 
-@implementation SecondViewController
+@implementation BookmarksViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

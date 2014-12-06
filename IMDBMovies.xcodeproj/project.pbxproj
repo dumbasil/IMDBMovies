@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1027C8515A17DC5C1E719EA6 /* libPods-IMDBMovies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18453B8FC7AA9F37BC748636 /* libPods-IMDBMovies.a */; };
 		7A3942D51A332C660097AF58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942D41A332C660097AF58 /* main.m */; };
 		7A3942D81A332C660097AF58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942D71A332C660097AF58 /* AppDelegate.m */; };
-		7A3942DB1A332C660097AF58 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DA1A332C660097AF58 /* FirstViewController.m */; };
-		7A3942DE1A332C660097AF58 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DD1A332C660097AF58 /* SecondViewController.m */; };
+		7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DA1A332C660097AF58 /* SearchViewController.m */; };
+		7A3942DE1A332C660097AF58 /* BookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DD1A332C660097AF58 /* BookmarksViewController.m */; };
 		7A3942E11A332C660097AF58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942DF1A332C660097AF58 /* Main.storyboard */; };
 		7A3942E31A332C660097AF58 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942E21A332C660097AF58 /* Images.xcassets */; };
 		7A3942E61A332C660097AF58 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942E41A332C660097AF58 /* LaunchScreen.xib */; };
 		7A3942F21A332C670097AF58 /* IMDBMoviesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942F11A332C670097AF58 /* IMDBMoviesTests.m */; };
+		7A3942FE1A3331BF0097AF58 /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942FC1A3331BF0097AF58 /* SearchResultCell.m */; };
+		7A3942FF1A3331BF0097AF58 /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942FD1A3331BF0097AF58 /* SearchResultCell.xib */; };
+		7A3943031A3336C70097AF58 /* NothingFoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3943011A3336C70097AF58 /* NothingFoundCell.m */; };
+		7A3943041A3336C70097AF58 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3943021A3336C70097AF58 /* NothingFoundCell.xib */; };
+		7A3943081A3336DF0097AF58 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3943061A3336DF0097AF58 /* LoadingCell.m */; };
+		7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3943071A3336DF0097AF58 /* LoadingCell.xib */; };
+		7A39430C1A33401E0097AF58 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430B1A33401E0097AF58 /* Search.m */; };
+		7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430E1A33451E0097AF58 /* SearchResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,21 +37,37 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18453B8FC7AA9F37BC748636 /* libPods-IMDBMovies.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IMDBMovies.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58E6192979024D5A71D2290D /* Pods-IMDBMovies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMDBMovies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies.debug.xcconfig"; sourceTree = "<group>"; };
 		7A3942CF1A332C660097AF58 /* IMDBMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMDBMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A3942D31A332C660097AF58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A3942D41A332C660097AF58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7A3942D61A332C660097AF58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7A3942D71A332C660097AF58 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7A3942D91A332C660097AF58 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		7A3942DA1A332C660097AF58 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		7A3942DC1A332C660097AF58 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		7A3942DD1A332C660097AF58 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		7A3942D91A332C660097AF58 /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		7A3942DA1A332C660097AF58 /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		7A3942DC1A332C660097AF58 /* BookmarksViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarksViewController.h; sourceTree = "<group>"; };
+		7A3942DD1A332C660097AF58 /* BookmarksViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewController.m; sourceTree = "<group>"; };
 		7A3942E01A332C660097AF58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7A3942E21A332C660097AF58 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7A3942E51A332C660097AF58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7A3942EB1A332C670097AF58 /* IMDBMoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMDBMoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A3942F01A332C670097AF58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A3942F11A332C670097AF58 /* IMDBMoviesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMDBMoviesTests.m; sourceTree = "<group>"; };
+		7A3942FB1A3331BF0097AF58 /* SearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultCell.h; sourceTree = "<group>"; };
+		7A3942FC1A3331BF0097AF58 /* SearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultCell.m; sourceTree = "<group>"; };
+		7A3942FD1A3331BF0097AF58 /* SearchResultCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
+		7A3943001A3336C70097AF58 /* NothingFoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NothingFoundCell.h; sourceTree = "<group>"; };
+		7A3943011A3336C70097AF58 /* NothingFoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NothingFoundCell.m; sourceTree = "<group>"; };
+		7A3943021A3336C70097AF58 /* NothingFoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
+		7A3943051A3336DF0097AF58 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingCell.h; sourceTree = "<group>"; };
+		7A3943061A3336DF0097AF58 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingCell.m; sourceTree = "<group>"; };
+		7A3943071A3336DF0097AF58 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		7A39430A1A33401E0097AF58 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
+		7A39430B1A33401E0097AF58 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
+		7A39430D1A33451E0097AF58 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		7A39430E1A33451E0097AF58 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		E960D9853308362161B7EE96 /* Pods-IMDBMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMDBMovies.release.xcconfig"; path = "Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1027C8515A17DC5C1E719EA6 /* libPods-IMDBMovies.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,12 +89,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2044AA60E216BD19BACFF695 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				58E6192979024D5A71D2290D /* Pods-IMDBMovies.debug.xcconfig */,
+				E960D9853308362161B7EE96 /* Pods-IMDBMovies.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7A3942C61A332C660097AF58 = {
 			isa = PBXGroup;
 			children = (
 				7A3942D11A332C660097AF58 /* IMDBMovies */,
 				7A3942EE1A332C670097AF58 /* IMDBMoviesTests */,
 				7A3942D01A332C660097AF58 /* Products */,
+				2044AA60E216BD19BACFF695 /* Pods */,
+				92E4F8F15CD6AB3C5EB51559 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,14 +123,27 @@
 			children = (
 				7A3942D61A332C660097AF58 /* AppDelegate.h */,
 				7A3942D71A332C660097AF58 /* AppDelegate.m */,
-				7A3942D91A332C660097AF58 /* FirstViewController.h */,
-				7A3942DA1A332C660097AF58 /* FirstViewController.m */,
-				7A3942DC1A332C660097AF58 /* SecondViewController.h */,
-				7A3942DD1A332C660097AF58 /* SecondViewController.m */,
+				7A3942D91A332C660097AF58 /* SearchViewController.h */,
+				7A3942DA1A332C660097AF58 /* SearchViewController.m */,
+				7A3942DC1A332C660097AF58 /* BookmarksViewController.h */,
+				7A3942DD1A332C660097AF58 /* BookmarksViewController.m */,
 				7A3942DF1A332C660097AF58 /* Main.storyboard */,
 				7A3942E21A332C660097AF58 /* Images.xcassets */,
 				7A3942E41A332C660097AF58 /* LaunchScreen.xib */,
 				7A3942D21A332C660097AF58 /* Supporting Files */,
+				7A3942FB1A3331BF0097AF58 /* SearchResultCell.h */,
+				7A3942FC1A3331BF0097AF58 /* SearchResultCell.m */,
+				7A3942FD1A3331BF0097AF58 /* SearchResultCell.xib */,
+				7A3943001A3336C70097AF58 /* NothingFoundCell.h */,
+				7A3943011A3336C70097AF58 /* NothingFoundCell.m */,
+				7A3943021A3336C70097AF58 /* NothingFoundCell.xib */,
+				7A3943051A3336DF0097AF58 /* LoadingCell.h */,
+				7A3943061A3336DF0097AF58 /* LoadingCell.m */,
+				7A3943071A3336DF0097AF58 /* LoadingCell.xib */,
+				7A39430A1A33401E0097AF58 /* Search.h */,
+				7A39430B1A33401E0097AF58 /* Search.m */,
+				7A39430D1A33451E0097AF58 /* SearchResult.h */,
+				7A39430E1A33451E0097AF58 /* SearchResult.m */,
 			);
 			path = IMDBMovies;
 			sourceTree = "<group>";
@@ -124,6 +174,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		92E4F8F15CD6AB3C5EB51559 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				18453B8FC7AA9F37BC748636 /* libPods-IMDBMovies.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -131,9 +189,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7A3942F51A332C670097AF58 /* Build configuration list for PBXNativeTarget "IMDBMovies" */;
 			buildPhases = (
+				ECD0AC604D2CDB7D3646FECF /* Check Pods Manifest.lock */,
 				7A3942CB1A332C660097AF58 /* Sources */,
 				7A3942CC1A332C660097AF58 /* Frameworks */,
 				7A3942CD1A332C660097AF58 /* Resources */,
+				17476B51756E045E696C2E15 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -205,7 +265,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A3942E11A332C660097AF58 /* Main.storyboard in Resources */,
+				7A3942FF1A3331BF0097AF58 /* SearchResultCell.xib in Resources */,
+				7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */,
 				7A3942E61A332C660097AF58 /* LaunchScreen.xib in Resources */,
+				7A3943041A3336C70097AF58 /* NothingFoundCell.xib in Resources */,
 				7A3942E31A332C660097AF58 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,14 +282,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		17476B51756E045E696C2E15 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ECD0AC604D2CDB7D3646FECF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7A3942CB1A332C660097AF58 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A3942DE1A332C660097AF58 /* SecondViewController.m in Sources */,
+				7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */,
+				7A3942DE1A332C660097AF58 /* BookmarksViewController.m in Sources */,
+				7A39430C1A33401E0097AF58 /* Search.m in Sources */,
 				7A3942D81A332C660097AF58 /* AppDelegate.m in Sources */,
-				7A3942DB1A332C660097AF58 /* FirstViewController.m in Sources */,
+				7A3943031A3336C70097AF58 /* NothingFoundCell.m in Sources */,
+				7A3943081A3336DF0097AF58 /* LoadingCell.m in Sources */,
+				7A3942FE1A3331BF0097AF58 /* SearchResultCell.m in Sources */,
+				7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */,
 				7A3942D51A332C660097AF58 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -338,7 +439,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -347,6 +448,7 @@
 		};
 		7A3942F61A332C670097AF58 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 58E6192979024D5A71D2290D /* Pods-IMDBMovies.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = IMDBMovies/Info.plist;
@@ -357,6 +459,7 @@
 		};
 		7A3942F71A332C670097AF58 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E960D9853308362161B7EE96 /* Pods-IMDBMovies.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = IMDBMovies/Info.plist;
@@ -418,6 +521,7 @@
 				7A3942F71A332C670097AF58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7A3942F81A332C670097AF58 /* Build configuration list for PBXNativeTarget "IMDBMoviesTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +530,7 @@
 				7A3942FA1A332C670097AF58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
