@@ -9,6 +9,8 @@
 #import "SearchViewController.h"
 #import "SearchResultCell.h"
 #import "Search.h"
+#import "SearchResult.h"
+#import <AFNetworking/UIImageView+AFNetworking.h>
 
 #define CELL_MARGIN_LEFT 8.0f;
 #define CELL_MARGIN_TOP_BOTTOM 8.0f;
@@ -18,7 +20,7 @@ static NSString * const SearchResultCellIdentifier = @"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
-@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, SearchDelegate>
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
@@ -57,7 +59,15 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 2;
+    if (_search == nil) {
+        return 0;
+    } else if (_search.isLoading) {
+        return 1;
+    } else if ([_search.searchResults count] == 0) {
+        return 1;
+    } else {
+        return [_search.searchResults count];
+    }
     
 }
 
@@ -84,78 +94,120 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
-    cell.layer.borderColor = [UIColor blackColor].CGColor;
-    cell.layer.borderWidth = 1.0f;
+    if (_search.isLoading) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
+
+        UIActivityIndicatorView *spinner = (UIActivityIndicatorView *)[cell viewWithTag:100];
+        [spinner startAnimating];
+        
+        return cell;
+        
+    } else if ([_search.searchResults count] == 0) {
+        return [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier forIndexPath:indexPath];
+        
+    } else {
+        
+        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
+        cell.layer.borderColor = [UIColor blackColor].CGColor;
+        cell.layer.borderWidth = 1.0f;
+        
+        SearchResult *searchResult = _search.searchResults[indexPath.section];
+        [self configureCell:cell forSearchResult:searchResult];
+        
+        return cell;
+    }
+
+}
+
+-(void)configureCell:(UITableViewCell*)cell forSearchResult:(SearchResult*)searchResult {
     
-   /* UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.text = @"Movie Title";
-    titleLabel.font = [UIFont systemFontOfSize:12.0f];
-    titleLabel.numberOfLines = 1;
-    titleLabel.baselineAdjustment = YES;
-    titleLabel.adjustsFontSizeToFitWidth = YES;
-    titleLabel.backgroundColor = [UIColor clearColor];
-    titleLabel.textColor = [UIColor blackColor];
-    titleLabel.textAlignment = NSTextAlignmentLeft;
     
-    CGRect titleFrame = titleLabel.frame;
-    titleFrame.origin.x = 100.0f;
-    titleFrame.origin.y = 100.0f;
-    titleLabel.frame = titleFrame;
+
+    UILabel *titleLable = (UILabel*)[cell viewWithTag:101];
+    titleLable.text = searchResult.title;
     
-    [cell addSubview:titleLabel];*/
+    CGRect newRect = titleLable.frame;
+    newRect.size.width = self.tableView.frame.size.width - 16.0;
+    titleLable.frame = newRect;
+    
+    [titleLable sizeToFit];
+    
+    UILabel *countryYearLabel = (UILabel*)[cell viewWithTag:102];
+    countryYearLabel.text = [NSString stringWithFormat:@"%@ - %@", searchResult.country, searchResult.year];
     
     UILabel *description = (UILabel*)[cell viewWithTag:104];
-    description.preferredMaxLayoutWidth = 100.0f;
-    description.text = @"Сколько лет прошло. все о том же гудят провода, все того же ждут самолеты.";
+    
+    if ([description.text isEqualToString:@"N/A"]) {
+        description.frame = CGRectZero;
+    } else {
+        description.text = searchResult.plot;
         
-    return cell;
+        newRect = description.frame;
+        
+        newRect.size.width = self.tableView.frame.size.width - 16.0;
+        description.frame = newRect;
+        
+        [description sizeToFit];
+        description.hidden = NO;
+    }
+
+    UIImageView *poster = (UIImageView*)[cell viewWithTag:103];
+    [poster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CGFloat cellHeight = 0.0f;
-    CGFloat yCursor = CELL_MARGIN_TOP_BOTTOM;
-    
-    UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-    
-    UILabel *titleLable = (UILabel*)[cell viewWithTag:101];
-    
-    CGRect titleLabelFrame = titleLable.frame;
-    titleLabelFrame.origin.x = CELL_MARGIN_LEFT;
-    titleLabelFrame.origin.y = yCursor;
-    titleLable.frame = titleLabelFrame;
-    
-    yCursor += titleLable.frame.size.height + 10.0f;
-    
-    UILabel *countryYearLabel = (UILabel*)[cell viewWithTag:102];
-    
-    CGRect countryYearLabelFrame = countryYearLabel.frame;
-    countryYearLabelFrame.origin.x = CELL_MARGIN_LEFT;
-    countryYearLabelFrame.origin.y = yCursor;
-    countryYearLabel.frame = countryYearLabelFrame;
-    
-    yCursor += countryYearLabel.frame.size.height + 10.0f;
-    
-    UIImageView *poster = (UIImageView*)[cell viewWithTag:103];
-    
-    CGRect posterFrame = poster.frame;
-    posterFrame.origin.x = CELL_MARGIN_LEFT;
-    posterFrame.origin.y = yCursor;
-    poster.frame = posterFrame;
-    
-    yCursor += poster.frame.size.height + 10.0f;
-    
-    UILabel *description = (UILabel*)[cell viewWithTag:104];
-    
-    CGRect descriptionFrame = description.frame;
-    descriptionFrame.origin.x = CELL_MARGIN_LEFT;
-    descriptionFrame.origin.y = yCursor;
-    description.frame = descriptionFrame;
-    
-    cellHeight = yCursor + description.frame.size.height + CELL_MARGIN_TOP_BOTTOM;
-    
-    return cellHeight;
+    if ([_search.searchResults count] > 0) {
+        CGFloat cellHeight = 0.0f;
+        CGFloat yCursor = CELL_MARGIN_TOP_BOTTOM;
+        
+        UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+        
+        UILabel *titleLable = (UILabel*)[cell viewWithTag:101];
+        
+        CGFloat titleLableHeight = titleLable.numberOfLines == 0 ? titleLable.frame.size.height : titleLable.numberOfLines * 21.5;
+        CGRect titleLabelFrame = titleLable.frame;
+        titleLabelFrame.origin.x = CELL_MARGIN_LEFT;
+        titleLabelFrame.origin.y = yCursor;
+        titleLable.frame = titleLabelFrame;
+        
+        yCursor += titleLableHeight + 10.0f;
+        NSLog(@"%ld", (long)titleLable.numberOfLines);
+        
+        UILabel *countryYearLabel = (UILabel*)[cell viewWithTag:102];
+        
+        CGRect countryYearLabelFrame = countryYearLabel.frame;
+        countryYearLabelFrame.origin.x = CELL_MARGIN_LEFT;
+        countryYearLabelFrame.origin.y = yCursor;
+        countryYearLabel.frame = countryYearLabelFrame;
+        
+        yCursor += countryYearLabel.frame.size.height + 10.0f;
+        
+        UIImageView *poster = (UIImageView*)[cell viewWithTag:103];
+        
+        CGRect posterFrame = poster.frame;
+        posterFrame.origin.x = CELL_MARGIN_LEFT;
+        posterFrame.origin.y = yCursor;
+        poster.frame = posterFrame;
+        
+        yCursor += poster.frame.size.height + 10.0f;
+        
+        UILabel *description = (UILabel*)[cell viewWithTag:104];
+        
+        CGRect descriptionFrame = description.frame;
+        descriptionFrame.origin.x = CELL_MARGIN_LEFT;
+        descriptionFrame.origin.y = yCursor;
+        description.frame = descriptionFrame;
+            
+        yCursor += description.frame.size.height;
+        cellHeight = yCursor + CELL_MARGIN_TOP_BOTTOM;
+        
+        return cellHeight;
+        
+    } else {
+        return 44.0;
+    }
     
 }
 
@@ -181,13 +233,26 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 {
     
     _search = [[Search alloc] init];
+    _search.delegate = self;
     
     NSLog(@"allocated %@", _search);
     
-    [_search performSearchForText:self.searchBar.text];
+    [_search performSearchForText:self.searchBar.text completion:^(BOOL success) {
+        if (success) {
+            //[self.tableView reloadData];
+        }
+    }];
     
     [self.tableView reloadData];
     [self.searchBar resignFirstResponder];
+    
+}
+
+#pragma mark - SearchDelegate
+
+-(void)didReceieveNewSearchResult {
+
+    [self.tableView reloadData];
     
 }
 

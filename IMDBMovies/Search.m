@@ -14,7 +14,6 @@ static NSOperationQueue *queue = nil;
 
 @interface Search()
 
-@property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, readwrite, strong) NSMutableArray *searchResults;
 
 @end
@@ -53,6 +52,7 @@ static NSOperationQueue *queue = nil;
     NSArray *array = searchResultsDictionary[@"Search"];
     if (array == nil) {
         NSLog(@"Expected 'Search' array");
+        [self.delegate didReceieveNewSearchResult];
         return;
     }
     
@@ -90,7 +90,7 @@ static NSOperationQueue *queue = nil;
     
 }
 
--(void)performSearchForText:(NSString *)text {
+-(void)performSearchForText:(NSString *)text completion:(SearchBlock)block {
     
     if ([text length] > 0) {
         [queue cancelAllOperations];
@@ -110,15 +110,15 @@ static NSOperationQueue *queue = nil;
             NSLog(@"First request succeeded!");
             [self parseSearchResults:responseObject];
             
-            [_searchResults sortUsingSelector:@selector(compareName:)];
-            
             self.isLoading = NO;
+            block(YES);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
             NSLog(@"First request failed %@", error);
             if (!operation.isCancelled) {
                 self.isLoading = NO;
+                block(NO);
             }
             
         }];
@@ -140,15 +140,11 @@ static NSOperationQueue *queue = nil;
         
         NSLog(@"Second request succeeded!");
         [self parseDictionary:responseObject];
-        
-        self.isLoading = NO;
+        [self.delegate didReceieveNewSearchResult];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"Second request failed: %@", error);
-        if (!operation.isCancelled) {
-            self.isLoading = NO;
-        }
         
     }];
     

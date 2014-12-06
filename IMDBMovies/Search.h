@@ -8,10 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^SearchBlock)(BOOL success);
+
+@protocol SearchDelegate <NSObject>
+
+-(void)didReceieveNewSearchResult;
+
+@end
+
 @interface Search : NSObject
 
+@property (nonatomic, strong) id delegate;
+@property (nonatomic, assign) BOOL isLoading;
 @property (nonatomic, readonly, strong) NSMutableArray *searchResults;
 
--(void)performSearchForText:(NSString*)text;
+-(void)performSearchForText:(NSString*)text completion:(SearchBlock)block;
 
 @end
