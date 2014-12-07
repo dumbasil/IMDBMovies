@@ -10,6 +10,7 @@
 #import "SearchResultCell.h"
 #import "Search.h"
 #import "SearchResult.h"
+#import "MovieDetailController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 
 #define CELL_MARGIN_LEFT 8.0f;
@@ -20,10 +21,12 @@ static NSString * const SearchResultCellIdentifier = @"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
-@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, SearchDelegate>
+@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, SearchDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+
+@property (nonatomic, assign) CGPoint tableViewOffset;
 
 @end
 
@@ -33,11 +36,28 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
 }
 
+-(instancetype)init {
+    
+    if (self = [super init]) {
+        
+    }
+    
+    return self;
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    
     self.view.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.showsVerticalScrollIndicator = NO;
+    
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapReceived:)];
+    [tapGestureRecognizer setDelegate:self];
+    [self.searchBar addGestureRecognizer:tapGestureRecognizer];
     
     //UINib *cellNib = [UINib nibWithNibName:SearchResultCellIdentifier bundle:nil];
     //[self.tableView registerNib:cellNib forCellReuseIdentifier:SearchResultCellIdentifier];
@@ -47,6 +67,18 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     cellNib = [UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
+    
+}
+
+-(void)tapReceived:(UITapGestureRecognizer *)tapGestureRecognizer
+{
+    [self.searchBar resignFirstResponder];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [[self navigationController] setNavigationBarHidden:YES animated:NO];
+    [self.tableView reloadData];
     
 }
 
@@ -120,8 +152,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 }
 
 -(void)configureCell:(UITableViewCell*)cell forSearchResult:(SearchResult*)searchResult {
-    
-    
 
     UILabel *titleLable = (UILabel*)[cell viewWithTag:101];
     titleLable.text = searchResult.title;
@@ -130,33 +160,32 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     newRect.size.width = self.tableView.frame.size.width - 16.0;
     titleLable.frame = newRect;
     
-    [titleLable sizeToFit];
+    //[titleLable sizeToFit];
     
     UILabel *countryYearLabel = (UILabel*)[cell viewWithTag:102];
     countryYearLabel.text = [NSString stringWithFormat:@"%@ - %@", searchResult.country, searchResult.year];
     
+    
     UILabel *description = (UILabel*)[cell viewWithTag:104];
     
-    if ([description.text isEqualToString:@"N/A"]) {
-        description.frame = CGRectZero;
-    } else {
-        description.text = searchResult.plot;
+    description.text = searchResult.plot;
         
-        newRect = description.frame;
+    newRect = description.frame;
         
-        newRect.size.width = self.tableView.frame.size.width - 16.0;
-        description.frame = newRect;
+    newRect.size.width = self.tableView.frame.size.width - 16.0;
+    description.frame = newRect;
         
-        [description sizeToFit];
-        description.hidden = NO;
-    }
+    //[description sizeToFit];
+    description.hidden = NO;
+    
+    
 
     UIImageView *poster = (UIImageView*)[cell viewWithTag:103];
     [poster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
     
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+/*-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([_search.searchResults count] > 0) {
         CGFloat cellHeight = 0.0f;
@@ -209,11 +238,28 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         return 44.0;
     }
     
-}
+}*/
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewAutomaticDimension;
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"ShowMovieDetails"]) {
+        
+        MovieDetailController *movieDetailController = segue.destinationViewController;
+        movieDetailController.hidesBottomBarWhenPushed = YES;
+        
+    }
     
 }
 
@@ -227,6 +273,12 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     [self performSearch];
+}
+
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+    
+    [searchBar resignFirstResponder];
+    
 }
 
 - (void)performSearch

@@ -58,35 +58,48 @@ static NSOperationQueue *queue = nil;
     
     for (NSDictionary *resultDict in array) {
         
+        BOOL final = NO;
+        
+        if (resultDict == [array lastObject]) {
+            final = YES;
+        }
+        
         NSString *movieId = resultDict[@"imdbID"];
-        [self performSearchForMovieId:movieId];
+        [self performSearchForMovieId:movieId final:final];
         
     }
     
 }
 
-- (void)parseDictionary:(NSDictionary *)dictionary {
+- (void)parseDictionary:(NSDictionary *)dictionary  final:(BOOL)isFinal{
     
     NSLog(@"%@", dictionary);
     
     SearchResult *searchResult = [[SearchResult alloc] init];
     
-    searchResult.title = dictionary[@"Title"];
-    searchResult.year = dictionary[@"Year"];
-    searchResult.released = dictionary[@"Released"];
-    searchResult.runtime = dictionary[@"Runtime"];
-    searchResult.genre = dictionary[@"Genre"];
-    searchResult.director = dictionary[@"Director"];
-    searchResult.writer = dictionary[@"Writer"];
-    searchResult.actors = dictionary[@"Actors"];
-    searchResult.plot = dictionary[@"Plot"];
-    searchResult.language = dictionary[@"Language"];
-    searchResult.country = dictionary[@"Country"];
-    searchResult.poster = dictionary[@"Poster"];
-    searchResult.rating = dictionary[@"imdbRating"];
-    searchResult.type = dictionary[@"Type"];
-    
-    [self.searchResults addObject:searchResult];
+    if ([dictionary[@"Type"]  isEqual: @"movie"] || [dictionary[@"Type"]  isEqual: @"series"] || [dictionary[@"Type"]  isEqual: @"episode"]) {
+        searchResult.title = dictionary[@"Title"];
+        searchResult.year = dictionary[@"Year"];
+        searchResult.released = dictionary[@"Released"];
+        searchResult.runtime = dictionary[@"Runtime"];
+        searchResult.genre = dictionary[@"Genre"];
+        searchResult.director = dictionary[@"Director"];
+        searchResult.writer = dictionary[@"Writer"];
+        searchResult.actors = dictionary[@"Actors"];
+        searchResult.plot = dictionary[@"Plot"];
+        searchResult.language = dictionary[@"Language"];
+        searchResult.country = dictionary[@"Country"];
+        searchResult.poster = dictionary[@"Poster"];
+        searchResult.rating = dictionary[@"imdbRating"];
+        searchResult.type = dictionary[@"Type"];
+        
+        [self.searchResults addObject:searchResult];
+        
+        if (isFinal) {
+            [self.delegate didReceieveNewSearchResult];
+        }
+        
+    }
     
 }
 
@@ -128,7 +141,7 @@ static NSOperationQueue *queue = nil;
     
 }
 
--(void)performSearchForMovieId:(NSString *)movieId {
+-(void)performSearchForMovieId:(NSString *)movieId final:(BOOL)isFinal {
     
     NSURL *url = [self urlWithMovieId:movieId];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -139,8 +152,7 @@ static NSOperationQueue *queue = nil;
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"Second request succeeded!");
-        [self parseDictionary:responseObject];
-        [self.delegate didReceieveNewSearchResult];
+        [self parseDictionary:responseObject final:isFinal];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

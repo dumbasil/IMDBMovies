@@ -24,6 +24,7 @@
 		7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3943071A3336DF0097AF58 /* LoadingCell.xib */; };
 		7A39430C1A33401E0097AF58 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430B1A33401E0097AF58 /* Search.m */; };
 		7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430E1A33451E0097AF58 /* SearchResult.m */; };
+		7ABF19121A33DC1B00995396 /* MovieDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABF19111A33DC1B00995396 /* MovieDetailController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,8 @@
 		7A39430B1A33401E0097AF58 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
 		7A39430D1A33451E0097AF58 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		7A39430E1A33451E0097AF58 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		7ABF19101A33DC1B00995396 /* MovieDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieDetailController.h; sourceTree = "<group>"; };
+		7ABF19111A33DC1B00995396 /* MovieDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieDetailController.m; sourceTree = "<group>"; };
 		E960D9853308362161B7EE96 /* Pods-IMDBMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMDBMovies.release.xcconfig"; path = "Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +147,8 @@
 				7A39430B1A33401E0097AF58 /* Search.m */,
 				7A39430D1A33451E0097AF58 /* SearchResult.h */,
 				7A39430E1A33451E0097AF58 /* SearchResult.m */,
+				7ABF19101A33DC1B00995396 /* MovieDetailController.h */,
+				7ABF19111A33DC1B00995396 /* MovieDetailController.m */,
 			);
 			path = IMDBMovies;
 			sourceTree = "<group>";
@@ -329,6 +334,7 @@
 				7A3942FE1A3331BF0097AF58 /* SearchResultCell.m in Sources */,
 				7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */,
 				7A3942D51A332C660097AF58 /* main.m in Sources */,
+				7ABF19121A33DC1B00995396 /* MovieDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
