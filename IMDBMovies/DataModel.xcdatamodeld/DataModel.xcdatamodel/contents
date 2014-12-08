@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Movie" representedClassName="Movie" syncable="YES">
+        <attribute name="movieCountry" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieDirector" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieGenre" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="moviePoster" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="movieRating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieReleased" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieRuntime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieTitle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieWriters" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="movieYear" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Movie" positionX="-63" positionY="-18" width="128" height="240"/>
+    </elements>
+</model>

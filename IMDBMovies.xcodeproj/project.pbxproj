@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1027C8515A17DC5C1E719EA6 /* libPods-IMDBMovies.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 18453B8FC7AA9F37BC748636 /* libPods-IMDBMovies.a */; };
+		7A317C1D1A34E14E0048BEA4 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A317C1C1A34E14E0048BEA4 /* Social.framework */; };
+		7A317C1F1A34E5660048BEA4 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A317C1E1A34E5660048BEA4 /* MessageUI.framework */; };
+		7A317C211A3502610048BEA4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A317C201A3502610048BEA4 /* CoreData.framework */; };
+		7A317C241A35D3380048BEA4 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7A317C221A35D3380048BEA4 /* DataModel.xcdatamodeld */; };
+		7A317C271A35D54E0048BEA4 /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A317C261A35D54E0048BEA4 /* Movie.m */; };
+		7A317C2A1A35E1E50048BEA4 /* HudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A317C291A35E1E50048BEA4 /* HudView.m */; };
 		7A3942D51A332C660097AF58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942D41A332C660097AF58 /* main.m */; };
 		7A3942D81A332C660097AF58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942D71A332C660097AF58 /* AppDelegate.m */; };
 		7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DA1A332C660097AF58 /* SearchViewController.m */; };
@@ -24,6 +30,7 @@
 		7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3943071A3336DF0097AF58 /* LoadingCell.xib */; };
 		7A39430C1A33401E0097AF58 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430B1A33401E0097AF58 /* Search.m */; };
 		7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430E1A33451E0097AF58 /* SearchResult.m */; };
+		7ABD78991A35FC02005A8C56 /* NoBookmarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */; };
 		7ABF19121A33DC1B00995396 /* MovieDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABF19111A33DC1B00995396 /* MovieDetailController.m */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +47,14 @@
 /* Begin PBXFileReference section */
 		18453B8FC7AA9F37BC748636 /* libPods-IMDBMovies.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-IMDBMovies.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		58E6192979024D5A71D2290D /* Pods-IMDBMovies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMDBMovies.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies.debug.xcconfig"; sourceTree = "<group>"; };
+		7A317C1C1A34E14E0048BEA4 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		7A317C1E1A34E5660048BEA4 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		7A317C201A3502610048BEA4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7A317C231A35D3380048BEA4 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		7A317C251A35D54E0048BEA4 /* Movie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
+		7A317C261A35D54E0048BEA4 /* Movie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
+		7A317C281A35E1E50048BEA4 /* HudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HudView.h; sourceTree = "<group>"; };
+		7A317C291A35E1E50048BEA4 /* HudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HudView.m; sourceTree = "<group>"; };
 		7A3942CF1A332C660097AF58 /* IMDBMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IMDBMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A3942D31A332C660097AF58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7A3942D41A332C660097AF58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -68,6 +83,8 @@
 		7A39430B1A33401E0097AF58 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
 		7A39430D1A33451E0097AF58 /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
 		7A39430E1A33451E0097AF58 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
+		7ABD78941A35F6EA005A8C56 /* IMDBMovies-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IMDBMovies-Prefix.pch"; sourceTree = "<group>"; };
+		7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoBookmarksCell.xib; sourceTree = "<group>"; };
 		7ABF19101A33DC1B00995396 /* MovieDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieDetailController.h; sourceTree = "<group>"; };
 		7ABF19111A33DC1B00995396 /* MovieDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieDetailController.m; sourceTree = "<group>"; };
 		E960D9853308362161B7EE96 /* Pods-IMDBMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMDBMovies.release.xcconfig"; path = "Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,6 +95,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A317C211A3502610048BEA4 /* CoreData.framework in Frameworks */,
+				7A317C1F1A34E5660048BEA4 /* MessageUI.framework in Frameworks */,
+				7A317C1D1A34E14E0048BEA4 /* Social.framework in Frameworks */,
 				1027C8515A17DC5C1E719EA6 /* libPods-IMDBMovies.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,6 +169,12 @@
 				7A39430E1A33451E0097AF58 /* SearchResult.m */,
 				7ABF19101A33DC1B00995396 /* MovieDetailController.h */,
 				7ABF19111A33DC1B00995396 /* MovieDetailController.m */,
+				7A317C221A35D3380048BEA4 /* DataModel.xcdatamodeld */,
+				7A317C251A35D54E0048BEA4 /* Movie.h */,
+				7A317C261A35D54E0048BEA4 /* Movie.m */,
+				7A317C281A35E1E50048BEA4 /* HudView.h */,
+				7A317C291A35E1E50048BEA4 /* HudView.m */,
+				7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */,
 			);
 			path = IMDBMovies;
 			sourceTree = "<group>";
@@ -158,6 +184,7 @@
 			children = (
 				7A3942D31A332C660097AF58 /* Info.plist */,
 				7A3942D41A332C660097AF58 /* main.m */,
+				7ABD78941A35F6EA005A8C56 /* IMDBMovies-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -182,6 +209,9 @@
 		92E4F8F15CD6AB3C5EB51559 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7A317C201A3502610048BEA4 /* CoreData.framework */,
+				7A317C1E1A34E5660048BEA4 /* MessageUI.framework */,
+				7A317C1C1A34E14E0048BEA4 /* Social.framework */,
 				18453B8FC7AA9F37BC748636 /* libPods-IMDBMovies.a */,
 			);
 			name = Frameworks;
@@ -273,6 +303,7 @@
 				7A3942FF1A3331BF0097AF58 /* SearchResultCell.xib in Resources */,
 				7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */,
 				7A3942E61A332C660097AF58 /* LaunchScreen.xib in Resources */,
+				7ABD78991A35FC02005A8C56 /* NoBookmarksCell.xib in Resources */,
 				7A3943041A3336C70097AF58 /* NothingFoundCell.xib in Resources */,
 				7A3942E31A332C660097AF58 /* Images.xcassets in Resources */,
 			);
@@ -325,12 +356,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A317C241A35D3380048BEA4 /* DataModel.xcdatamodeld in Sources */,
 				7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */,
 				7A3942DE1A332C660097AF58 /* BookmarksViewController.m in Sources */,
 				7A39430C1A33401E0097AF58 /* Search.m in Sources */,
 				7A3942D81A332C660097AF58 /* AppDelegate.m in Sources */,
 				7A3943031A3336C70097AF58 /* NothingFoundCell.m in Sources */,
+				7A317C271A35D54E0048BEA4 /* Movie.m in Sources */,
 				7A3943081A3336DF0097AF58 /* LoadingCell.m in Sources */,
+				7A317C2A1A35E1E50048BEA4 /* HudView.m in Sources */,
 				7A3942FE1A3331BF0097AF58 /* SearchResultCell.m in Sources */,
 				7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */,
 				7A3942D51A332C660097AF58 /* main.m in Sources */,
@@ -399,6 +433,8 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IMDBMovies/IMDBMovies-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -439,6 +475,8 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IMDBMovies/IMDBMovies-Prefix.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -539,6 +577,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7A317C221A35D3380048BEA4 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7A317C231A35D3380048BEA4 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 7A317C231A35D3380048BEA4 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 7A3942C71A332C660097AF58 /* Project object */;
 }

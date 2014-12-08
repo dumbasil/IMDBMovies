@@ -13,6 +13,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *movieName;
 @property (nonatomic, weak) IBOutlet UILabel *countryYear;
 @property (nonatomic, weak) IBOutlet UIImageView *moviePoster;
-@property (nonatomic, weak) IBOutlet UITextView *movieDescription;
+@property (nonatomic, weak) IBOutlet UILabel *movieDescription;
 
 @end

@@ -41,7 +41,7 @@ static NSOperationQueue *queue = nil;
 - (NSURL *)urlWithMovieId:(NSString *)movieId
 {
     
-    NSString *urlString = [NSString stringWithFormat:@"http://www.omdbapi.com/?i=%@&r=json", movieId];
+    NSString *urlString = [NSString stringWithFormat:@"http://www.omdbapi.com/?i=%@&r=json&plot=full", movieId];
     NSURL *url = [NSURL URLWithString:urlString];
     return url;
     
@@ -78,6 +78,7 @@ static NSOperationQueue *queue = nil;
     SearchResult *searchResult = [[SearchResult alloc] init];
     
     if ([dictionary[@"Type"]  isEqual: @"movie"] || [dictionary[@"Type"]  isEqual: @"series"] || [dictionary[@"Type"]  isEqual: @"episode"]) {
+        searchResult.movieId = dictionary[@"imdbID"];
         searchResult.title = dictionary[@"Title"];
         searchResult.year = dictionary[@"Year"];
         searchResult.released = dictionary[@"Released"];
@@ -85,7 +86,6 @@ static NSOperationQueue *queue = nil;
         searchResult.genre = dictionary[@"Genre"];
         searchResult.director = dictionary[@"Director"];
         searchResult.writer = dictionary[@"Writer"];
-        searchResult.actors = dictionary[@"Actors"];
         searchResult.plot = dictionary[@"Plot"];
         searchResult.language = dictionary[@"Language"];
         searchResult.country = dictionary[@"Country"];

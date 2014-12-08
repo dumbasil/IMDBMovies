@@ -10,6 +10,7 @@
 
 @interface SearchViewController : UIViewController
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 

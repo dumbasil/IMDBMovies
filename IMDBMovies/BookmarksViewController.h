@@ -10,6 +10,8 @@
 
 @interface BookmarksViewController : UIViewController
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSArray *bookmarks;
 
 @end
 

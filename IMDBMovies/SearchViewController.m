@@ -12,6 +12,7 @@
 #import "SearchResult.h"
 #import "MovieDetailController.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <CoreData/CoreData.h>
 
 #define CELL_MARGIN_LEFT 8.0f;
 #define CELL_MARGIN_TOP_BOTTOM 8.0f;
@@ -59,10 +60,10 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     [tapGestureRecognizer setDelegate:self];
     [self.searchBar addGestureRecognizer:tapGestureRecognizer];
     
-    //UINib *cellNib = [UINib nibWithNibName:SearchResultCellIdentifier bundle:nil];
-    //[self.tableView registerNib:cellNib forCellReuseIdentifier:SearchResultCellIdentifier];
+    UINib *cellNib = [UINib nibWithNibName:SearchResultCellIdentifier bundle:nil];
+    [self.tableView registerNib:cellNib forCellReuseIdentifier:SearchResultCellIdentifier];
     
-    UINib *cellNib = [UINib nibWithNibName:NothingFoundCellIdentifier bundle:nil];
+    cellNib = [UINib nibWithNibName:NothingFoundCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:NothingFoundCellIdentifier];
     
     cellNib = [UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
@@ -139,7 +140,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         
     } else {
         
-        UITableViewCell *cell = (UITableViewCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
+        SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier forIndexPath:indexPath];
         cell.layer.borderColor = [UIColor blackColor].CGColor;
         cell.layer.borderWidth = 1.0f;
         
@@ -151,94 +152,23 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 }
 
--(void)configureCell:(UITableViewCell*)cell forSearchResult:(SearchResult*)searchResult {
+-(void)configureCell:(SearchResultCell*)cell forSearchResult:(SearchResult*)searchResult {
 
-    UILabel *titleLable = (UILabel*)[cell viewWithTag:101];
-    titleLable.text = searchResult.title;
+    cell.movieName.text = searchResult.title;
+    cell.countryYear.text = [NSString stringWithFormat:@"%@ - %@", searchResult.country, searchResult.year];
     
-    CGRect newRect = titleLable.frame;
-    newRect.size.width = self.tableView.frame.size.width - 16.0;
-    titleLable.frame = newRect;
-    
-    //[titleLable sizeToFit];
-    
-    UILabel *countryYearLabel = (UILabel*)[cell viewWithTag:102];
-    countryYearLabel.text = [NSString stringWithFormat:@"%@ - %@", searchResult.country, searchResult.year];
+    if (![searchResult.plot isEqualToString:@"N/A"]) {
+        cell.movieDescription.text = searchResult.plot;
+    } else {
+        cell.movieDescription.text = @"";
+    }
     
     
-    UILabel *description = (UILabel*)[cell viewWithTag:104];
-    
-    description.text = searchResult.plot;
-        
-    newRect = description.frame;
-        
-    newRect.size.width = self.tableView.frame.size.width - 16.0;
-    description.frame = newRect;
-        
-    //[description sizeToFit];
-    description.hidden = NO;
-    
-    
-
-    UIImageView *poster = (UIImageView*)[cell viewWithTag:103];
-    [poster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
+    [cell.moviePoster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
     
 }
 
-/*-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if ([_search.searchResults count] > 0) {
-        CGFloat cellHeight = 0.0f;
-        CGFloat yCursor = CELL_MARGIN_TOP_BOTTOM;
-        
-        UITableViewCell *cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
-        
-        UILabel *titleLable = (UILabel*)[cell viewWithTag:101];
-        
-        CGFloat titleLableHeight = titleLable.numberOfLines == 0 ? titleLable.frame.size.height : titleLable.numberOfLines * 21.5;
-        CGRect titleLabelFrame = titleLable.frame;
-        titleLabelFrame.origin.x = CELL_MARGIN_LEFT;
-        titleLabelFrame.origin.y = yCursor;
-        titleLable.frame = titleLabelFrame;
-        
-        yCursor += titleLableHeight + 10.0f;
-        NSLog(@"%ld", (long)titleLable.numberOfLines);
-        
-        UILabel *countryYearLabel = (UILabel*)[cell viewWithTag:102];
-        
-        CGRect countryYearLabelFrame = countryYearLabel.frame;
-        countryYearLabelFrame.origin.x = CELL_MARGIN_LEFT;
-        countryYearLabelFrame.origin.y = yCursor;
-        countryYearLabel.frame = countryYearLabelFrame;
-        
-        yCursor += countryYearLabel.frame.size.height + 10.0f;
-        
-        UIImageView *poster = (UIImageView*)[cell viewWithTag:103];
-        
-        CGRect posterFrame = poster.frame;
-        posterFrame.origin.x = CELL_MARGIN_LEFT;
-        posterFrame.origin.y = yCursor;
-        poster.frame = posterFrame;
-        
-        yCursor += poster.frame.size.height + 10.0f;
-        
-        UILabel *description = (UILabel*)[cell viewWithTag:104];
-        
-        CGRect descriptionFrame = description.frame;
-        descriptionFrame.origin.x = CELL_MARGIN_LEFT;
-        descriptionFrame.origin.y = yCursor;
-        description.frame = descriptionFrame;
-            
-        yCursor += description.frame.size.height;
-        cellHeight = yCursor + CELL_MARGIN_TOP_BOTTOM;
-        
-        return cellHeight;
-        
-    } else {
-        return 44.0;
-    }
-    
-}*/
+
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -258,6 +188,25 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         
         MovieDetailController *movieDetailController = segue.destinationViewController;
         movieDetailController.hidesBottomBarWhenPushed = YES;
+        
+        SearchResult *currentSearchResult = (SearchResult*)sender;
+        movieDetailController.title = currentSearchResult.title;
+        movieDetailController.movieTitleValue = currentSearchResult.title;
+        movieDetailController.movieInformationValue = [NSString stringWithFormat:@"%@ - %@ - %@ (%@)", currentSearchResult.runtime, currentSearchResult.genre, currentSearchResult.released, currentSearchResult.country];
+        movieDetailController.movieRatingValue = [currentSearchResult.rating stringByAppendingString:@"/10"];
+        movieDetailController.movieDirectorValue = currentSearchResult.director;
+        movieDetailController.movieWritersValue = currentSearchResult.writer;
+        movieDetailController.movieTypeValue = currentSearchResult.type;
+        movieDetailController.movieDescriptionValue = currentSearchResult.plot;
+        movieDetailController.posterUrl = currentSearchResult.poster;
+        movieDetailController.movieId = currentSearchResult.movieId;
+        movieDetailController.movieCountryValue = currentSearchResult.country;
+        movieDetailController.movieYearValue = currentSearchResult.year;
+        movieDetailController.movieGenreValue = currentSearchResult.genre;
+        movieDetailController.movieReleasedValue = currentSearchResult.released;
+        movieDetailController.movieRuntimeValue = currentSearchResult.runtime;
+        
+        movieDetailController.managedObjectContext = self.managedObjectContext;
         
     }
     

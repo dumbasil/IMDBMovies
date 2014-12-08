@@ -10,6 +10,7 @@
 
 @interface SearchResult : NSObject
 
+@property (nonatomic, copy) NSString *movieId;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *year;
 @property (nonatomic, copy) NSString *released;
@@ -17,7 +18,6 @@
 @property (nonatomic, copy) NSString *genre;
 @property (nonatomic, copy) NSString *director;
 @property (nonatomic, copy) NSString *writer;
-@property (nonatomic, copy) NSString *actors;
 @property (nonatomic, copy) NSString *plot;
 @property (nonatomic, copy) NSString *language;
 @property (nonatomic, copy) NSString *country;
