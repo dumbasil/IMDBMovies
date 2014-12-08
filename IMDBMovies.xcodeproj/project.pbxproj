@@ -19,7 +19,6 @@
 		7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DA1A332C660097AF58 /* SearchViewController.m */; };
 		7A3942DE1A332C660097AF58 /* BookmarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942DD1A332C660097AF58 /* BookmarksViewController.m */; };
 		7A3942E11A332C660097AF58 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942DF1A332C660097AF58 /* Main.storyboard */; };
-		7A3942E31A332C660097AF58 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942E21A332C660097AF58 /* Images.xcassets */; };
 		7A3942E61A332C660097AF58 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942E41A332C660097AF58 /* LaunchScreen.xib */; };
 		7A3942F21A332C670097AF58 /* IMDBMoviesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942F11A332C670097AF58 /* IMDBMoviesTests.m */; };
 		7A3942FE1A3331BF0097AF58 /* SearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3942FC1A3331BF0097AF58 /* SearchResultCell.m */; };
@@ -31,6 +30,7 @@
 		7A39430C1A33401E0097AF58 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430B1A33401E0097AF58 /* Search.m */; };
 		7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430E1A33451E0097AF58 /* SearchResult.m */; };
 		7ABD78991A35FC02005A8C56 /* NoBookmarksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */; };
+		7ABD789B1A363681005A8C56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7ABD789A1A363681005A8C56 /* Images.xcassets */; };
 		7ABF19121A33DC1B00995396 /* MovieDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ABF19111A33DC1B00995396 /* MovieDetailController.m */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +65,6 @@
 		7A3942DC1A332C660097AF58 /* BookmarksViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BookmarksViewController.h; sourceTree = "<group>"; };
 		7A3942DD1A332C660097AF58 /* BookmarksViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BookmarksViewController.m; sourceTree = "<group>"; };
 		7A3942E01A332C660097AF58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		7A3942E21A332C660097AF58 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7A3942E51A332C660097AF58 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		7A3942EB1A332C670097AF58 /* IMDBMoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMDBMoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A3942F01A332C670097AF58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +84,7 @@
 		7A39430E1A33451E0097AF58 /* SearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResult.m; sourceTree = "<group>"; };
 		7ABD78941A35F6EA005A8C56 /* IMDBMovies-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IMDBMovies-Prefix.pch"; sourceTree = "<group>"; };
 		7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoBookmarksCell.xib; sourceTree = "<group>"; };
+		7ABD789A1A363681005A8C56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		7ABF19101A33DC1B00995396 /* MovieDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MovieDetailController.h; sourceTree = "<group>"; };
 		7ABF19111A33DC1B00995396 /* MovieDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MovieDetailController.m; sourceTree = "<group>"; };
 		E960D9853308362161B7EE96 /* Pods-IMDBMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IMDBMovies.release.xcconfig"; path = "Pods/Target Support Files/Pods-IMDBMovies/Pods-IMDBMovies.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +144,7 @@
 		7A3942D11A332C660097AF58 /* IMDBMovies */ = {
 			isa = PBXGroup;
 			children = (
+				7ABD789A1A363681005A8C56 /* Images.xcassets */,
 				7A3942D61A332C660097AF58 /* AppDelegate.h */,
 				7A3942D71A332C660097AF58 /* AppDelegate.m */,
 				7A3942D91A332C660097AF58 /* SearchViewController.h */,
@@ -151,7 +152,6 @@
 				7A3942DC1A332C660097AF58 /* BookmarksViewController.h */,
 				7A3942DD1A332C660097AF58 /* BookmarksViewController.m */,
 				7A3942DF1A332C660097AF58 /* Main.storyboard */,
-				7A3942E21A332C660097AF58 /* Images.xcassets */,
 				7A3942E41A332C660097AF58 /* LaunchScreen.xib */,
 				7A3942D21A332C660097AF58 /* Supporting Files */,
 				7A3942FB1A3331BF0097AF58 /* SearchResultCell.h */,
@@ -301,11 +301,11 @@
 			files = (
 				7A3942E11A332C660097AF58 /* Main.storyboard in Resources */,
 				7A3942FF1A3331BF0097AF58 /* SearchResultCell.xib in Resources */,
+				7ABD789B1A363681005A8C56 /* Images.xcassets in Resources */,
 				7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */,
 				7A3942E61A332C660097AF58 /* LaunchScreen.xib in Resources */,
 				7ABD78991A35FC02005A8C56 /* NoBookmarksCell.xib in Resources */,
 				7A3943041A3336C70097AF58 /* NothingFoundCell.xib in Resources */,
-				7A3942E31A332C660097AF58 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

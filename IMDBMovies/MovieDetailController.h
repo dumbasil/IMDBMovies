@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSString *movieWritersValue;
 @property (nonatomic, strong) NSString *movieTypeValue;
 @property (nonatomic, strong) NSString *movieDescriptionValue;
-@property (nonatomic, strong) NSString *posterUrl;
+@property (nonatomic, strong) UIImage *poster;
 @property (nonatomic, strong) NSString *movieId;
 
 @property (nonatomic, strong) NSString *movieCountryValue;
@@ -27,16 +27,7 @@
 @property (nonatomic, strong) NSString *movieReleasedValue;
 @property (nonatomic, strong) NSString *movieRuntimeValue;
 
-@property (nonatomic, weak) IBOutlet UIView *contentView;
-@property (nonatomic, weak) IBOutlet UILabel *movieTitle;
-@property (nonatomic, weak) IBOutlet UILabel *movieInformation;
-@property (nonatomic, weak) IBOutlet UILabel *movieRating;
-@property (nonatomic, weak) IBOutlet UILabel *movieDirector;
-@property (nonatomic, weak) IBOutlet UILabel *movieWriters;
-@property (nonatomic, weak) IBOutlet UILabel *movieType;
-@property (nonatomic, weak) IBOutlet UILabel *movieDescription;
-@property (nonatomic, weak) IBOutlet UIImageView *moviePoster;
-
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end

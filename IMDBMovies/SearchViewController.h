@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 @interface SearchViewController : UIViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 

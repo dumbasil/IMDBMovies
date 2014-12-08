@@ -11,6 +11,7 @@
 #import "Search.h"
 #import "SearchResult.h"
 #import "MovieDetailController.h"
+#import "Movie.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <CoreData/CoreData.h>
 
@@ -163,11 +164,32 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         cell.movieDescription.text = @"";
     }
     
-    
     [cell.moviePoster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
+    
+    cell.bookmarkImage.hidden = YES;
+    
+    if ([self checkMovieInBookmarksWithId:searchResult.movieId]) {
+        cell.bookmarkImage.hidden = NO;
+    } 
     
 }
 
+-(BOOL)checkMovieInBookmarksWithId:(NSString*)movieId {
+    
+    for (int i = 0; i < [[self.fetchedResultsController fetchedObjects] count]; i ++) {
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        if ([movieId isEqualToString:movie.movieId]) {
+            return YES;
+        }
+        
+    }
+    
+    return NO;
+    
+}
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -198,7 +220,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         movieDetailController.movieWritersValue = currentSearchResult.writer;
         movieDetailController.movieTypeValue = currentSearchResult.type;
         movieDetailController.movieDescriptionValue = currentSearchResult.plot;
-        movieDetailController.posterUrl = currentSearchResult.poster;
+        movieDetailController.poster = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:currentSearchResult.poster]]];;
         movieDetailController.movieId = currentSearchResult.movieId;
         movieDetailController.movieCountryValue = currentSearchResult.country;
         movieDetailController.movieYearValue = currentSearchResult.year;
@@ -207,6 +229,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         movieDetailController.movieRuntimeValue = currentSearchResult.runtime;
         
         movieDetailController.managedObjectContext = self.managedObjectContext;
+        movieDetailController.fetchedResultsController = self.fetchedResultsController;
         
     }
     
@@ -229,6 +252,14 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     [searchBar resignFirstResponder];
     
 }
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    
+    [searchBar resignFirstResponder];
+    
+}
+
+
 
 - (void)performSearch
 {

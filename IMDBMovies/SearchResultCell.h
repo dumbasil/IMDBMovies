@@ -14,5 +14,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *countryYear;
 @property (nonatomic, weak) IBOutlet UIImageView *moviePoster;
 @property (nonatomic, weak) IBOutlet UILabel *movieDescription;
+@property (nonatomic, weak) IBOutlet UIImageView *bookmarkImage;
 
 @end

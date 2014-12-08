@@ -9,6 +9,10 @@
 #import "MovieDetailController.h"
 #import "Movie.h"
 #import "HudView.h"
+
+#import "SearchViewController.h"
+#import "BookmarksViewController.h"
+
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <Social/Social.h>
 #import <MessageUI/MessageUI.h>
@@ -16,11 +20,24 @@
 
 @interface MovieDetailController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
+@property (nonatomic, weak) IBOutlet UIView *contentView;
+@property (nonatomic, weak) IBOutlet UILabel *movieTitle;
+@property (nonatomic, weak) IBOutlet UILabel *movieInformation;
+@property (nonatomic, weak) IBOutlet UILabel *movieRating;
+@property (nonatomic, weak) IBOutlet UILabel *movieDirector;
+@property (nonatomic, weak) IBOutlet UILabel *movieWriters;
+@property (nonatomic, weak) IBOutlet UILabel *movieType;
+@property (nonatomic, weak) IBOutlet UILabel *movieDescription;
+@property (nonatomic, weak) IBOutlet UIImageView *moviePoster;
+@property (nonatomic, weak) IBOutlet UIImageView *bookmarkImage;
+
 @end
 
 @implementation MovieDetailController {
     
     UIActionSheet *_actionSheet;
+    NSString *_addOrDelete;
+    NSIndexPath *_indexPathForDeleting;
     
 }
 
@@ -35,12 +52,41 @@
     self.navigationItem.rightBarButtonItem = shareButton;
     [self fillMovieInformationFields];
     
+    if (![self checkMovieInBookmarksWithId:self.movieId]) {
+        self.bookmarkImage.hidden = YES;
+    }
+    
 }
 
 -(IBAction)shareAction:(id)sender {
     
-    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Twitter Share", @"Facebook Share", @"Email share", @"Add bookmark", nil];
+    if ([self checkMovieInBookmarksWithId:self.movieId]) {
+        _addOrDelete = @"Delete bookmark";
+    } else {
+        _addOrDelete = @"Add bookmark";
+    }
+    
+    _actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Twitter Share", @"Facebook Share", @"Email share", _addOrDelete, nil];
+    
     [_actionSheet showInView:self.view];
+    
+}
+
+-(BOOL)checkMovieInBookmarksWithId:(NSString*)movieId {
+    
+    for (int i = 0; i < [[self.fetchedResultsController fetchedObjects] count]; i ++) {
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        Movie *movie = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        if ([movieId isEqualToString:movie.movieId]) {
+            _indexPathForDeleting = indexPath;
+            return YES;
+        }
+        
+    }
+    
+    return NO;
     
 }
 
@@ -58,12 +104,10 @@
     dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
     dispatch_async(myQueue, ^{
         
-        UIImage *posterImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.posterUrl]]];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            CGFloat imageWidth = posterImage.size.width;
-            CGFloat imageHeight = posterImage.size.height;
+            CGFloat imageWidth = self.poster.size.width;
+            CGFloat imageHeight = self.poster.size.height;
             
             CGFloat ratio = self.moviePoster.frame.size.width / imageWidth;
             CGFloat newImageViewHeight = (int)(imageHeight * ratio);
@@ -72,7 +116,7 @@
             newImageRect.size.height = newImageViewHeight;
             self.moviePoster.frame = newImageRect;
             
-            [self.moviePoster setImage:posterImage];
+            [self.moviePoster setImage:self.poster];
             
         });
     });
@@ -165,16 +209,17 @@
         
     } else if (buttonIndex == 3) {
         
-        [self saveBookmarkInDatabase];
+        if ([_addOrDelete isEqualToString:@"Add bookmark"]) {
+            [self saveBookmarkInDatabase];
+        } else if ([_addOrDelete isEqualToString:@"Delete bookmark"]) {
+            [self deleteBookmarkFromDatabase];
+        }
         
     }
     
 }
 
 -(void)saveBookmarkInDatabase {
-    
-    HudView *hudView = [HudView hudInView:self.navigationController.view];
-    hudView.text = @"Added!";
     
     Movie *movie = [NSEntityDescription insertNewObjectForEntityForName:@"Movie" inManagedObjectContext:self.managedObjectContext];
     
@@ -191,11 +236,38 @@
     movie.movieWriters = self.movieWritersValue;
     movie.movieYear = self.movieYearValue;
     
+    NSData *imageData = UIImageJPEGRepresentation(self.poster, 100.0);
+    movie.moviePoster = imageData;
+    
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
         FATAL_CORE_DATA_ERROR(error);
         return;
+    } else {
+        HudView *hudView = [HudView hudInView:self.navigationController.view];
+        hudView.text = @"Added!";
+        
+        self.bookmarkImage.hidden = NO;
     }
+    
+}
+
+-(void)deleteBookmarkFromDatabase {
+    
+    Movie *movie = [self.fetchedResultsController objectAtIndexPath:_indexPathForDeleting];
+    [self.managedObjectContext deleteObject:movie];
+    
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        FATAL_CORE_DATA_ERROR(error);
+        return;
+    } else {
+        HudView *hudView = [HudView hudInView:self.navigationController.view];
+        hudView.text = @"Deleted!";
+        
+        self.bookmarkImage.hidden = YES;
+    }
+
     
 }
 

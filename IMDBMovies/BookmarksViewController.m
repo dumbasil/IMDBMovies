@@ -9,12 +9,12 @@
 #import "BookmarksViewController.h"
 #import "Movie.h"
 #import "SearchResultCell.h"
+#import "MovieDetailController.h"
 
 static NSString * const SearchResultCellIdentifier = @"SearchResultCell";
 static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 
 @interface BookmarksViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @end
 
@@ -39,6 +39,12 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    
+    [self.tableView reloadData];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -48,8 +54,10 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    if ([_bookmarks count] > 0) {
-        return [_bookmarks count];
+    NSLog(@"%d", [[self.fetchedResultsController fetchedObjects] count]);
+    
+    if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
+        return [[self.fetchedResultsController fetchedObjects] count];
     } else {
         return 1;
     }
@@ -78,13 +86,13 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([_bookmarks count] > 0) {
+    if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
         
         SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier forIndexPath:indexPath];
         cell.layer.borderColor = [UIColor blackColor].CGColor;
         cell.layer.borderWidth = 1.0f;
         
-        Movie *movie = _bookmarks[indexPath.section];
+        Movie *movie = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
         [self configureCell:cell forBookmark:movie];
         
         return cell;
@@ -103,6 +111,10 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     cell.movieName.text = movie.movieTitle;
     cell.countryYear.text = [NSString stringWithFormat:@"%@ - %@", movie.movieCountry, movie.movieYear];
     
+    if (movie.moviePoster != nil) {
+        [cell.moviePoster setImage:[UIImage imageWithData:movie.moviePoster]];
+    }
+    
     if (![movie.movieDescription isEqualToString:@"N/A"]) {
         cell.movieDescription.text = movie.movieDescription;
     } else {
@@ -115,7 +127,39 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //[self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+    [self performSegueWithIdentifier:@"ShowBookmarkDetails" sender:[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]]];
+    
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"ShowBookmarkDetails"]) {
+        
+        MovieDetailController *movieDetailController = segue.destinationViewController;
+        movieDetailController.hidesBottomBarWhenPushed = YES;
+        
+        Movie *movie = (Movie*)sender;
+        
+        movieDetailController.title = movie.movieTitle;
+        movieDetailController.movieTitleValue = movie.movieTitle;
+        movieDetailController.movieInformationValue = [NSString stringWithFormat:@"%@ - %@ - %@ (%@)", movie.movieRuntime, movie.movieGenre, movie.movieReleased, movie.movieCountry];
+        movieDetailController.movieRatingValue = movie.movieRating;
+        movieDetailController.movieDirectorValue = movie.movieDirector;
+        movieDetailController.movieWritersValue = movie.movieWriters;
+        movieDetailController.movieTypeValue = movie.movieType;
+        movieDetailController.movieDescriptionValue = movie.movieDescription;
+        movieDetailController.poster = [UIImage imageWithData:movie.moviePoster];
+        movieDetailController.movieId = movie.movieId;
+        movieDetailController.movieCountryValue = movie.movieCountry;
+        movieDetailController.movieYearValue = movie.movieYear;
+        movieDetailController.movieGenreValue = movie.movieGenre;
+        movieDetailController.movieReleasedValue = movie.movieReleased;
+        movieDetailController.movieRuntimeValue = movie.movieRuntime;
+        
+        movieDetailController.managedObjectContext = self.managedObjectContext;
+        movieDetailController.fetchedResultsController = self.fetchedResultsController;
+        
+    }
     
 }
 

@@ -20,35 +20,42 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
 @property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, strong) NSArray *bookmarks;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    
+    SearchViewController *_searchViewController;
+    BookmarksViewController *_bookmarksViewController;
+    
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [NSFetchedResultsController deleteCacheWithName:@"Movies"];
     [self getBookmarks];
     
     UITabBarController *tabBarController = (UITabBarController*)self.window.rootViewController;
     
     UINavigationController *firstNavigationController = (UINavigationController*)tabBarController.viewControllers[0];
-    SearchViewController *searchViewController = (SearchViewController*)firstNavigationController.viewControllers[0];
-    searchViewController.managedObjectContext = self.managedObjectContext;
+    _searchViewController = (SearchViewController*)firstNavigationController.viewControllers[0];
+    _searchViewController.managedObjectContext = self.managedObjectContext;
+    _searchViewController.fetchedResultsController = self.fetchedResultsController;
     
     UINavigationController *secondNavigationController = (UINavigationController*)tabBarController.viewControllers[1];
-    BookmarksViewController *bookmarksViewController = (BookmarksViewController*)secondNavigationController.viewControllers[0];
-    bookmarksViewController.managedObjectContext = self.managedObjectContext;
-    bookmarksViewController.bookmarks = self.bookmarks;
+    _bookmarksViewController = (BookmarksViewController*)secondNavigationController.viewControllers[0];
+    _bookmarksViewController.managedObjectContext = self.managedObjectContext;
+    //bookmarksViewController.bookmarks = self.bookmarks;
+    _bookmarksViewController.fetchedResultsController = self.fetchedResultsController;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fatalCoreDataError:) name:ManagedObjectContextSaveDidFailNotification object:nil];
 
     return YES;
 }
 
-/*-(NSFetchedResultsController*)fetchedResultsController {
+-(NSFetchedResultsController*)fetchedResultsController {
     
     if (_fetchedResultsController == nil) {
         
@@ -56,6 +63,9 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
         
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.managedObjectContext];
         [fetchRequest setEntity:entity];
+        
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"movieTitle" ascending:YES];
+        [fetchRequest setSortDescriptors:@[sortDescriptor]];
         
         [fetchRequest setFetchBatchSize:20];
         
@@ -66,7 +76,7 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
     }
     
     return _fetchedResultsController;
-}*/
+}
 
 -(void)fatalCoreDataError:(NSNotification*)notification {
     
@@ -77,19 +87,13 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
 
 -(void)getBookmarks {
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Movie" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    
     NSError *error;
-    NSArray *foundObjects = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    if (foundObjects == nil) {
+    if (![self.fetchedResultsController performFetch:&error]) {
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
     
-    self.bookmarks = foundObjects;
+    //self.bookmarks = foundObjects;
     
 }
 
@@ -178,6 +182,15 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
     abort();
+    
+}
+
+#pragma mark -NSFetchedResultsControllerDelegate 
+
+-(void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    
+    NSLog(@"*** Controller will change content ***");
+    //[_bookmarksViewController.tableView beginUpdates];
     
 }
 
