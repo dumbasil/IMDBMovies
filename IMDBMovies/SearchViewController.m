@@ -27,6 +27,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UITableViewCell *prototypeCell;
 
 @property (nonatomic, assign) CGPoint tableViewOffset;
 
@@ -56,6 +57,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     self.view.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.separatorColor = [UIColor clearColor];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapReceived:)];
     [tapGestureRecognizer setDelegate:self];
@@ -130,6 +132,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     if (_search.isLoading) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LoadingCellIdentifier];
+        cell.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
 
         UIActivityIndicatorView *spinner = (UIActivityIndicatorView *)[cell viewWithTag:100];
         [spinner startAnimating];
@@ -137,7 +140,10 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         return cell;
         
     } else if ([_search.searchResults count] == 0) {
-        return [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
+        
+        return cell;
         
     } else {
         
@@ -199,10 +205,15 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+/*- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return UITableViewAutomaticDimension;
-}
+}*/
+
+/*-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+}*/
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     

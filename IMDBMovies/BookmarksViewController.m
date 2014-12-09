@@ -54,7 +54,7 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    NSLog(@"%d", [[self.fetchedResultsController fetchedObjects] count]);
+    NSLog(@"%lu", (unsigned long)[[self.fetchedResultsController fetchedObjects] count]);
     
     if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
         return [[self.fetchedResultsController fetchedObjects] count];
