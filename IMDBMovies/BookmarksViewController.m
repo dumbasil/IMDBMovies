@@ -30,6 +30,7 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     self.view.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.separatorColor = [UIColor clearColor];
     
     UINib *cellNib = [UINib nibWithNibName:SearchResultCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:SearchResultCellIdentifier];
@@ -57,8 +58,10 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     NSLog(@"%lu", (unsigned long)[[self.fetchedResultsController fetchedObjects] count]);
     
     if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
+        self.tableView.scrollEnabled = YES;
         return [[self.fetchedResultsController fetchedObjects] count];
     } else {
+        self.tableView.scrollEnabled = NO;
         return 1;
     }
     
@@ -88,7 +91,7 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     
     if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
         
-        SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier forIndexPath:indexPath];
+        SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
         cell.layer.borderColor = [UIColor blackColor].CGColor;
         cell.layer.borderWidth = 1.0f;
         
@@ -99,7 +102,10 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         
     } else {
         
-        return [tableView dequeueReusableCellWithIdentifier:NoBookmarksCellIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:NoBookmarksCellIdentifier];
+        cell.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
+        
+        return cell;
         
     }
 
@@ -113,6 +119,8 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     
     if (movie.moviePoster != nil) {
         [cell.moviePoster setImage:[UIImage imageWithData:movie.moviePoster]];
+    } else {
+        [cell.moviePoster setImage:[UIImage imageNamed:@"poster-placeholder"]];
     }
     
     if (![movie.movieDescription isEqualToString:@"N/A"]) {
@@ -124,10 +132,46 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(iOS8_0)) {
+        return [self tableView:tableView estimatedHeightForRowAtIndexPath:indexPath];
+    }
+    
+    id cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[SearchResultCell class]]) {
+        
+        SearchResultCell *searchResultCell = (SearchResultCell*)cell;
+        
+        CGFloat cellHeight = 0;
+        
+        CGSize idealSize = [searchResultCell.movieDescription sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
+        
+        cellHeight = 12.0f + searchResultCell.movieName.frame.size.height + 9.0f + searchResultCell.countryYear.frame.size.height + 10.0f + searchResultCell.moviePoster.frame.size.height + 10.0f + idealSize.height + ([searchResultCell.movieDescription.text length] > 0 ? 24.0f : 0.0f) +8.0f;
+        
+        return cellHeight;
+        
+    } else {
+        return 44.0;
+    }
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewAutomaticDimension;
+    
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"ShowBookmarkDetails" sender:[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]]];
+    if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
+        
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self performSegueWithIdentifier:@"ShowBookmarkDetails" sender:[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]]];
+        
+    }
     
 }
 
@@ -142,7 +186,6 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         
         movieDetailController.title = movie.movieTitle;
         movieDetailController.movieTitleValue = movie.movieTitle;
-        movieDetailController.movieInformationValue = [NSString stringWithFormat:@"%@ - %@ - %@ (%@)", movie.movieRuntime, movie.movieGenre, movie.movieReleased, movie.movieCountry];
         movieDetailController.movieRatingValue = movie.movieRating;
         movieDetailController.movieDirectorValue = movie.movieDirector;
         movieDetailController.movieWritersValue = movie.movieWriters;
@@ -161,11 +204,6 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         
     }
     
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return UITableViewAutomaticDimension;
 }
 
 

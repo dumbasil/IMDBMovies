@@ -95,9 +95,9 @@ static NSOperationQueue *queue = nil;
         
         [self.searchResults addObject:searchResult];
         
-        if (isFinal) {
+        //if (isFinal) {
             [self.delegate didReceieveNewSearchResult];
-        }
+        //}
         
     }
     

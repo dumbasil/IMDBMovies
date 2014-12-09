@@ -18,7 +18,6 @@
 #define CELL_MARGIN_LEFT 8.0f;
 #define CELL_MARGIN_TOP_BOTTOM 8.0f;
 
-
 static NSString * const SearchResultCellIdentifier = @"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
@@ -27,6 +26,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) IBOutlet UIImageView *logo;
 @property (nonatomic, strong) UITableViewCell *prototypeCell;
 
 @property (nonatomic, assign) CGPoint tableViewOffset;
@@ -58,6 +58,9 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.showsVerticalScrollIndicator = NO;
     self.tableView.separatorColor = [UIColor clearColor];
+
+    [self showIMDBLogo];
+    [self.searchBar becomeFirstResponder];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapReceived:)];
     [tapGestureRecognizer setDelegate:self];
@@ -71,6 +74,34 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     cellNib = [UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
+    
+}
+
+-(void)showIMDBLogo {
+    
+    self.logo.hidden = NO;
+    
+    CGFloat goalY = self.logo.center.y;
+    self.logo.center = CGPointMake(self.view.frame.size.width / 2.0, CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.logo.center = CGPointMake(self.logo.center.x, goalY);
+    }];
+    
+}
+
+-(void)hideIMDBLogo {
+    
+    CGFloat goalY = CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f;
+    //self.logo.center = CGPointMake(self.view.frame.size.width / 2.0, CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f);
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        self.logo.center = CGPointMake(self.logo.center.x, goalY);
+    } completion:^(BOOL finished) {
+        self.logo.hidden = YES;
+    }];
+    
+    
     
 }
 
@@ -98,10 +129,13 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     if (_search == nil) {
         return 0;
     } else if (_search.isLoading) {
+        self.tableView.scrollEnabled = NO;
         return 1;
     } else if ([_search.searchResults count] == 0) {
+        self.tableView.scrollEnabled = NO;
         return 1;
     } else {
+        self.tableView.scrollEnabled = YES;
         return [_search.searchResults count];
     }
     
@@ -140,17 +174,16 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         return cell;
         
     } else if ([_search.searchResults count] == 0) {
-        UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier forIndexPath:indexPath];
+        UITableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:NothingFoundCellIdentifier];
         cell.backgroundColor = [UIColor colorWithWhite:0.870 alpha:1.000];
         
         return cell;
         
     } else {
         
-        SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier forIndexPath:indexPath];
+        SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
         cell.layer.borderColor = [UIColor blackColor].CGColor;
         cell.layer.borderWidth = 1.0f;
-        
         SearchResult *searchResult = _search.searchResults[indexPath.section];
         [self configureCell:cell forSearchResult:searchResult];
         
@@ -162,7 +195,15 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 -(void)configureCell:(SearchResultCell*)cell forSearchResult:(SearchResult*)searchResult {
 
     cell.movieName.text = searchResult.title;
-    cell.countryYear.text = [NSString stringWithFormat:@"%@ - %@", searchResult.country, searchResult.year];
+    
+    NSString *firstInformationPart = [searchResult.country isEqualToString:@"N/A"] ? @"" : [searchResult.country stringByAppendingString:@" - "];
+    cell.countryYear.text = [NSString stringWithFormat:@"%@%@", firstInformationPart, searchResult.year];
+    
+    if ([cell.countryYear.text length] == 0) {
+        
+        cell.countryYear.text = @"No Information";
+        
+    }
     
     if (![searchResult.plot isEqualToString:@"N/A"]) {
         cell.movieDescription.text = searchResult.plot;
@@ -170,8 +211,12 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         cell.movieDescription.text = @"";
     }
     
-    [cell.moviePoster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
-    
+    if (![searchResult.poster isEqualToString:@"N/A"]) {
+        [cell.moviePoster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
+    } else {
+        [cell.moviePoster setImage:[UIImage imageNamed:@"poster-placeholder"]];
+    }
+
     cell.bookmarkImage.hidden = YES;
     
     if ([self checkMovieInBookmarksWithId:searchResult.movieId]) {
@@ -179,6 +224,40 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     } 
     
 }
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(iOS8_0)) {
+        return [self tableView:tableView estimatedHeightForRowAtIndexPath:indexPath];
+    }
+    
+    id cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[SearchResultCell class]]) {
+        
+        SearchResultCell *searchResultCell = (SearchResultCell*)cell;
+        
+        CGFloat cellHeight = 0;
+        
+        CGSize idealSize = [searchResultCell.movieDescription sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
+        
+        cellHeight = 12.0f + searchResultCell.movieName.frame.size.height + 9.0f + searchResultCell.countryYear.frame.size.height + 10.0f + searchResultCell.moviePoster.frame.size.height + 10.0f + idealSize.height + 24.0f +8.0f;
+        
+        return cellHeight;
+        
+    } else {
+        return 44.0;
+    }
+    
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return UITableViewAutomaticDimension;
+    
+}
+
 
 -(BOOL)checkMovieInBookmarksWithId:(NSString*)movieId {
     
@@ -200,20 +279,12 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+    if ([_search.searchResults count] > 0) {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+        [self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+    }
     
 }
-
-/*- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return UITableViewAutomaticDimension;
-}*/
-
-/*-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
-}*/
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -225,8 +296,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         SearchResult *currentSearchResult = (SearchResult*)sender;
         movieDetailController.title = currentSearchResult.title;
         movieDetailController.movieTitleValue = currentSearchResult.title;
-        movieDetailController.movieInformationValue = [NSString stringWithFormat:@"%@ - %@ - %@ (%@)", currentSearchResult.runtime, currentSearchResult.genre, currentSearchResult.released, currentSearchResult.country];
-        movieDetailController.movieRatingValue = [currentSearchResult.rating stringByAppendingString:@"/10"];
+        movieDetailController.movieRatingValue = currentSearchResult.rating;
         movieDetailController.movieDirectorValue = currentSearchResult.director;
         movieDetailController.movieWritersValue = currentSearchResult.writer;
         movieDetailController.movieTypeValue = currentSearchResult.type;
@@ -255,6 +325,15 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
+    
+    if ([self.searchBar.text length] > 0) {
+        
+        if (!self.logo.hidden) {
+            [self hideIMDBLogo];
+        }
+        
+    }
+    
     [self performSearch];
 }
 

@@ -93,13 +93,21 @@
 -(void)fillMovieInformationFields {
     
     self.movieTitle.text = self.movieTitleValue;
-    self.movieInformation.text = self.movieInformationValue;
-    self.movieRating.text = self.movieRatingValue;
-    self.movieDirector.text = self.movieDirectorValue;
-    self.movieWriters.text = self.movieWritersValue;
-    self.movieType.text = self.movieTypeValue;
-    self.movieDescription.text = self.movieDescriptionValue;
-    //[self.moviePoster setImageWithURL:[NSURL URLWithString:self.posterUrl]];
+    
+    NSString *firstInformationPart = [self.movieRuntimeValue isEqualToString:@"N/A"] ? @"" : [self.movieRuntimeValue stringByAppendingString:@" - "];
+    NSString *secondInformationPart = [self.movieGenreValue isEqualToString:@"N/A"] ? @"" : [self.movieGenreValue stringByAppendingString:@" - "];
+    NSString *thirdInformationPart = [self.movieReleasedValue isEqualToString:@"N/A"] ? @"" : [self.movieReleasedValue stringByAppendingString:@" "];
+    NSString *fourthInformationPart = [self.movieCountryValue isEqualToString:@"N/A"] ? @"" : [NSString stringWithFormat:@"(%@)", self.movieCountryValue];
+    
+    self.movieInformation.text = [NSString stringWithFormat:@"%@%@%@%@", firstInformationPart, secondInformationPart, thirdInformationPart, fourthInformationPart];
+    if ([self.movieInformation.text length] == 0) {
+        self.movieInformation.text = @"No Information";
+    }
+    self.movieRating.text = [self.movieRatingValue isEqualToString:@"N/A"] ? @"unknown" : [self.movieRatingValue stringByAppendingString:@"/10"];
+    self.movieDirector.text = [self.movieDirectorValue isEqualToString:@"N/A"] ? @"unknown" : self.movieDirectorValue;
+    self.movieWriters.text = [self.movieWritersValue isEqualToString:@"N/A"] ? @"unknown" : self.movieWritersValue;
+    self.movieType.text = [self.movieTypeValue isEqualToString:@"N/A"] ? @"unknown" : self.movieTypeValue;
+    self.movieDescription.text = [self.movieDescriptionValue isEqualToString:@"N/A"] ? @"No description" : self.movieDescriptionValue;
     
     dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
     dispatch_async(myQueue, ^{

@@ -12,7 +12,6 @@
 @interface MovieDetailController : UIViewController
 
 @property (nonatomic, strong) NSString *movieTitleValue;
-@property (nonatomic, strong) NSString *movieInformationValue;
 @property (nonatomic, strong) NSString *movieRatingValue;
 @property (nonatomic, strong) NSString *movieDirectorValue;
 @property (nonatomic, strong) NSString *movieWritersValue;
