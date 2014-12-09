@@ -13,9 +13,6 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
-@property (nonatomic, strong) NSArray *bookmarks;
-
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @end
 

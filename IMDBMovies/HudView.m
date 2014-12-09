@@ -39,7 +39,7 @@ static const UIView *parentView;
     
     CGRect boxRect = CGRectMake(roundf((self.bounds.size.width - boxWidth)/2.0f), roundf((self.bounds.size.height - boxHeight)/2.0f), boxWidth, boxHeight);
     UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:boxRect cornerRadius:10.0f];
-    [[UIColor colorWithWhite:0.3f alpha:0.8f] setFill];
+    [[UIColor colorWithRed:0.500 green:0.000 blue:0.500 alpha:0.620] setFill];
     [roundedRect fill];
     
     UIImage *image = [UIImage imageNamed:@"Checkmark"];
@@ -61,30 +61,27 @@ static const UIView *parentView;
 
 -(void)showAndHide{
     
-        self.alpha = 0.0f;
-        self.transform = CGAffineTransformMakeScale(1.3f, 1.3f);
+    self.alpha = 0.0f;
+    self.transform = CGAffineTransformMakeScale(1.3f, 1.3f);
         
     [UIView animateWithDuration:0.3 animations:^{
             
-            self.alpha = 1.0f;
-            self.transform = CGAffineTransformIdentity;
+        self.alpha = 1.0f;
+        self.transform = CGAffineTransformIdentity;
             
-        } completion:^(BOOL finished) {
+    } completion:^(BOOL finished) {
                 
-                //self.alpha = 1.0f;
-                //self.transform = CGAffineTransformMakeScale(0.0f, 0.0f);
-                
-            [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.3 delay:0.5 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     
-                    self.alpha = 0.0f;
-                    self.transform = CGAffineTransformIdentity;
+                self.alpha = 0.0f;
+                self.transform = CGAffineTransformIdentity;
                     
-                } completion:^(BOOL finished) {
-                    parentView.userInteractionEnabled = YES;
-                    [self removeFromSuperview];
-                }];
+            } completion:^(BOOL finished) {
+                parentView.userInteractionEnabled = YES;
+                [self removeFromSuperview];
+            }];
             
-        }];
+    }];
     
 }
 

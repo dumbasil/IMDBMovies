@@ -16,13 +16,13 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 
 @interface BookmarksViewController () <UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate>
 
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
+
 @end
 
 @implementation BookmarksViewController {
     
 }
-
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,8 +54,6 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 #pragma mark - UITableViewDataSource | UITableViewDelegate
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    NSLog(@"%lu", (unsigned long)[[self.fetchedResultsController fetchedObjects] count]);
     
     if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
         self.tableView.scrollEnabled = YES;
@@ -98,6 +96,9 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         Movie *movie = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
         [self configureCell:cell forBookmark:movie];
         
+        cell.layer.cornerRadius = 10;
+        cell.layer.masksToBounds = YES;
+        
         return cell;
         
     } else {
@@ -109,7 +110,6 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         
     }
 
-    
 }
 
 -(void)configureCell:(SearchResultCell*)cell forBookmark:(Movie*)movie {
@@ -205,8 +205,6 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     }
     
 }
-
-
 
 
 @end

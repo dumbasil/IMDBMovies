@@ -26,9 +26,6 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
 
 @implementation AppDelegate {
     
-    SearchViewController *_searchViewController;
-    BookmarksViewController *_bookmarksViewController;
-    
 }
 
 
@@ -39,16 +36,19 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
     
     UITabBarController *tabBarController = (UITabBarController*)self.window.rootViewController;
     
+    [[UITabBar appearance] setTintColor:[UIColor purpleColor]];
+    //[[UITabBar appearance] setBarTintColor:[UIColor yellowColor]];
+    [[UIAlertView appearance] setTintColor:[UIColor purpleColor]];
+    
     UINavigationController *firstNavigationController = (UINavigationController*)tabBarController.viewControllers[0];
-    _searchViewController = (SearchViewController*)firstNavigationController.viewControllers[0];
-    _searchViewController.managedObjectContext = self.managedObjectContext;
-    _searchViewController.fetchedResultsController = self.fetchedResultsController;
+    SearchViewController *searchViewController = (SearchViewController*)firstNavigationController.viewControllers[0];
+    searchViewController.managedObjectContext = self.managedObjectContext;
+    searchViewController.fetchedResultsController = self.fetchedResultsController;
     
     UINavigationController *secondNavigationController = (UINavigationController*)tabBarController.viewControllers[1];
-    _bookmarksViewController = (BookmarksViewController*)secondNavigationController.viewControllers[0];
-    _bookmarksViewController.managedObjectContext = self.managedObjectContext;
-    //bookmarksViewController.bookmarks = self.bookmarks;
-    _bookmarksViewController.fetchedResultsController = self.fetchedResultsController;
+    BookmarksViewController *bookmarksViewController = (BookmarksViewController*)secondNavigationController.viewControllers[0];
+    bookmarksViewController.managedObjectContext = self.managedObjectContext;
+    bookmarksViewController.fetchedResultsController = self.fetchedResultsController;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fatalCoreDataError:) name:ManagedObjectContextSaveDidFailNotification object:nil];
 
@@ -92,8 +92,6 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
         FATAL_CORE_DATA_ERROR(error);
         return;
     }
-    
-    //self.bookmarks = foundObjects;
     
 }
 
@@ -185,12 +183,10 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
     
 }
 
-#pragma mark -NSFetchedResultsControllerDelegate 
+#pragma mark - NSFetchedResultsControllerDelegate 
 
--(void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+-(void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     
-    NSLog(@"*** Controller will change content ***");
-    //[_bookmarksViewController.tableView beginUpdates];
     
 }
 

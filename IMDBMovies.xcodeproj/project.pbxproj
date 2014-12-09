@@ -25,7 +25,6 @@
 		7A3942FF1A3331BF0097AF58 /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3942FD1A3331BF0097AF58 /* SearchResultCell.xib */; };
 		7A3943031A3336C70097AF58 /* NothingFoundCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3943011A3336C70097AF58 /* NothingFoundCell.m */; };
 		7A3943041A3336C70097AF58 /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3943021A3336C70097AF58 /* NothingFoundCell.xib */; };
-		7A3943081A3336DF0097AF58 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A3943061A3336DF0097AF58 /* LoadingCell.m */; };
 		7A3943091A3336DF0097AF58 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A3943071A3336DF0097AF58 /* LoadingCell.xib */; };
 		7A39430C1A33401E0097AF58 /* Search.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430B1A33401E0097AF58 /* Search.m */; };
 		7A39430F1A33451E0097AF58 /* SearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A39430E1A33451E0097AF58 /* SearchResult.m */; };
@@ -75,8 +74,6 @@
 		7A3943001A3336C70097AF58 /* NothingFoundCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NothingFoundCell.h; sourceTree = "<group>"; };
 		7A3943011A3336C70097AF58 /* NothingFoundCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NothingFoundCell.m; sourceTree = "<group>"; };
 		7A3943021A3336C70097AF58 /* NothingFoundCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
-		7A3943051A3336DF0097AF58 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingCell.h; sourceTree = "<group>"; };
-		7A3943061A3336DF0097AF58 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingCell.m; sourceTree = "<group>"; };
 		7A3943071A3336DF0097AF58 /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		7A39430A1A33401E0097AF58 /* Search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
 		7A39430B1A33401E0097AF58 /* Search.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Search.m; sourceTree = "<group>"; };
@@ -151,30 +148,28 @@
 				7A3942DA1A332C660097AF58 /* SearchViewController.m */,
 				7A3942DC1A332C660097AF58 /* BookmarksViewController.h */,
 				7A3942DD1A332C660097AF58 /* BookmarksViewController.m */,
+				7ABF19101A33DC1B00995396 /* MovieDetailController.h */,
+				7ABF19111A33DC1B00995396 /* MovieDetailController.m */,
 				7A3942DF1A332C660097AF58 /* Main.storyboard */,
+				7A3943021A3336C70097AF58 /* NothingFoundCell.xib */,
+				7A3943071A3336DF0097AF58 /* LoadingCell.xib */,
+				7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */,
 				7A3942E41A332C660097AF58 /* LaunchScreen.xib */,
-				7A3942D21A332C660097AF58 /* Supporting Files */,
+				7A3942FD1A3331BF0097AF58 /* SearchResultCell.xib */,
 				7A3942FB1A3331BF0097AF58 /* SearchResultCell.h */,
 				7A3942FC1A3331BF0097AF58 /* SearchResultCell.m */,
-				7A3942FD1A3331BF0097AF58 /* SearchResultCell.xib */,
 				7A3943001A3336C70097AF58 /* NothingFoundCell.h */,
 				7A3943011A3336C70097AF58 /* NothingFoundCell.m */,
-				7A3943021A3336C70097AF58 /* NothingFoundCell.xib */,
-				7A3943051A3336DF0097AF58 /* LoadingCell.h */,
-				7A3943061A3336DF0097AF58 /* LoadingCell.m */,
-				7A3943071A3336DF0097AF58 /* LoadingCell.xib */,
 				7A39430A1A33401E0097AF58 /* Search.h */,
 				7A39430B1A33401E0097AF58 /* Search.m */,
 				7A39430D1A33451E0097AF58 /* SearchResult.h */,
 				7A39430E1A33451E0097AF58 /* SearchResult.m */,
-				7ABF19101A33DC1B00995396 /* MovieDetailController.h */,
-				7ABF19111A33DC1B00995396 /* MovieDetailController.m */,
-				7A317C221A35D3380048BEA4 /* DataModel.xcdatamodeld */,
 				7A317C251A35D54E0048BEA4 /* Movie.h */,
 				7A317C261A35D54E0048BEA4 /* Movie.m */,
 				7A317C281A35E1E50048BEA4 /* HudView.h */,
 				7A317C291A35E1E50048BEA4 /* HudView.m */,
-				7ABD78971A35FC02005A8C56 /* NoBookmarksCell.xib */,
+				7A317C221A35D3380048BEA4 /* DataModel.xcdatamodeld */,
+				7A3942D21A332C660097AF58 /* Supporting Files */,
 			);
 			path = IMDBMovies;
 			sourceTree = "<group>";
@@ -363,7 +358,6 @@
 				7A3942D81A332C660097AF58 /* AppDelegate.m in Sources */,
 				7A3943031A3336C70097AF58 /* NothingFoundCell.m in Sources */,
 				7A317C271A35D54E0048BEA4 /* Movie.m in Sources */,
-				7A3943081A3336DF0097AF58 /* LoadingCell.m in Sources */,
 				7A317C2A1A35E1E50048BEA4 /* HudView.m in Sources */,
 				7A3942FE1A3331BF0097AF58 /* SearchResultCell.m in Sources */,
 				7A3942DB1A332C660097AF58 /* SearchViewController.m in Sources */,

@@ -58,20 +58,14 @@ static NSOperationQueue *queue = nil;
     
     for (NSDictionary *resultDict in array) {
         
-        BOOL final = NO;
-        
-        if (resultDict == [array lastObject]) {
-            final = YES;
-        }
-        
         NSString *movieId = resultDict[@"imdbID"];
-        [self performSearchForMovieId:movieId final:final];
+        [self performSearchForMovieId:movieId];
         
     }
     
 }
 
-- (void)parseDictionary:(NSDictionary *)dictionary  final:(BOOL)isFinal{
+- (void)parseDictionary:(NSDictionary *)dictionary {
     
     NSLog(@"%@", dictionary);
     
@@ -94,16 +88,13 @@ static NSOperationQueue *queue = nil;
         searchResult.type = dictionary[@"Type"];
         
         [self.searchResults addObject:searchResult];
-        
-        //if (isFinal) {
-            [self.delegate didReceieveNewSearchResult];
-        //}
+        [self.delegate didReceieveNewSearchResult];
         
     }
     
 }
 
--(void)performSearchForText:(NSString *)text completion:(SearchBlock)block {
+-(void)performSearchForText:(NSString *)text {
     
     if ([text length] > 0) {
         [queue cancelAllOperations];
@@ -124,14 +115,12 @@ static NSOperationQueue *queue = nil;
             [self parseSearchResults:responseObject];
             
             self.isLoading = NO;
-            block(YES);
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
             NSLog(@"First request failed %@", error);
             if (!operation.isCancelled) {
                 self.isLoading = NO;
-                block(NO);
             }
             
         }];
@@ -141,7 +130,7 @@ static NSOperationQueue *queue = nil;
     
 }
 
--(void)performSearchForMovieId:(NSString *)movieId final:(BOOL)isFinal {
+-(void)performSearchForMovieId:(NSString *)movieId {
     
     NSURL *url = [self urlWithMovieId:movieId];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -152,7 +141,7 @@ static NSOperationQueue *queue = nil;
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"Second request succeeded!");
-        [self parseDictionary:responseObject final:isFinal];
+        [self parseDictionary:responseObject];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         

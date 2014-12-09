@@ -48,7 +48,7 @@
     UIBarButtonItem *shareButton = [[UIBarButtonItem alloc]
                                     initWithBarButtonSystemItem:UIBarButtonSystemItemAction
                                     target:self
-                                    action:@selector(shareAction:)];
+                                    action:@selector(performAction:)];
     self.navigationItem.rightBarButtonItem = shareButton;
     [self fillMovieInformationFields];
     
@@ -58,7 +58,7 @@
     
 }
 
--(IBAction)shareAction:(id)sender {
+-(IBAction)performAction:(id)sender {
     
     if ([self checkMovieInBookmarksWithId:self.movieId]) {
         _addOrDelete = @"Delete bookmark";
@@ -67,6 +67,16 @@
     }
     
     _actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Twitter Share", @"Facebook Share", @"Email share", _addOrDelete, nil];
+    
+    SEL selector = NSSelectorFromString(@"_alertController");
+    if ([_actionSheet respondsToSelector:selector])
+    {
+        UIAlertController *alertController = [_actionSheet valueForKey:@"_alertController"];
+        if ([alertController isKindOfClass:[UIAlertController class]])
+        {
+            alertController.view.tintColor = [UIColor purpleColor];
+        }
+    }
     
     [_actionSheet showInView:self.view];
     
@@ -287,14 +297,19 @@
     
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - UIActionSheetDelegate
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet
+{
+    for (UIView *subview in actionSheet.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            UIButton *button = (UIButton *)subview;
+            //button.titleLabel.textColor = [UIColor purpleColor];
+            [button setTitleColor:[UIColor purpleColor] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor purpleColor] forState:UIControlStateSelected];
+            [button setTitleColor:[UIColor purpleColor] forState:UIControlStateHighlighted];
+        }
+    }
 }
-*/
 
 @end

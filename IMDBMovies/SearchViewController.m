@@ -15,9 +15,6 @@
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <CoreData/CoreData.h>
 
-#define CELL_MARGIN_LEFT 8.0f;
-#define CELL_MARGIN_TOP_BOTTOM 8.0f;
-
 static NSString * const SearchResultCellIdentifier = @"SearchResultCell";
 static NSString * const NothingFoundCellIdentifier = @"NothingFoundCell";
 static NSString * const LoadingCellIdentifier = @"LoadingCell";
@@ -27,25 +24,12 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) IBOutlet UIImageView *logo;
-@property (nonatomic, strong) UITableViewCell *prototypeCell;
-
-@property (nonatomic, assign) CGPoint tableViewOffset;
 
 @end
 
 @implementation SearchViewController {
     
     Search *_search;
-    
-}
-
--(instancetype)init {
-    
-    if (self = [super init]) {
-        
-    }
-    
-    return self;
     
 }
 
@@ -93,15 +77,12 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 -(void)hideIMDBLogo {
     
     CGFloat goalY = CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f;
-    //self.logo.center = CGPointMake(self.view.frame.size.width / 2.0, CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f);
     
     [UIView animateWithDuration:0.5 animations:^{
         self.logo.center = CGPointMake(self.logo.center.x, goalY);
     } completion:^(BOOL finished) {
         self.logo.hidden = YES;
     }];
-    
-    
     
 }
 
@@ -113,7 +94,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 -(void)viewWillAppear:(BOOL)animated {
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
-    [self.tableView reloadData];
+    //[self.tableView reloadData];
     
 }
 
@@ -182,10 +163,13 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     } else {
         
         SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
-        cell.layer.borderColor = [UIColor blackColor].CGColor;
-        cell.layer.borderWidth = 1.0f;
+        cell.layer.borderColor = [UIColor purpleColor].CGColor;
+        cell.layer.borderWidth = 2.0f;
         SearchResult *searchResult = _search.searchResults[indexPath.section];
         [self configureCell:cell forSearchResult:searchResult];
+        
+        cell.layer.cornerRadius = 10;
+        cell.layer.masksToBounds = YES;
         
         return cell;
     }
@@ -349,21 +333,13 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
 }
 
-
-
 - (void)performSearch
 {
     
     _search = [[Search alloc] init];
     _search.delegate = self;
     
-    NSLog(@"allocated %@", _search);
-    
-    [_search performSearchForText:self.searchBar.text completion:^(BOOL success) {
-        if (success) {
-            //[self.tableView reloadData];
-        }
-    }];
+    [_search performSearchForText:self.searchBar.text];
     
     [self.tableView reloadData];
     [self.searchBar resignFirstResponder];
@@ -377,9 +353,5 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     [self.tableView reloadData];
     
 }
-
-
-
-
 
 @end

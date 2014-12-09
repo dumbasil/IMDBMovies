@@ -43,7 +43,7 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="buC-np-8CP"/>
                                 </connections>
                             </tableView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="imdb-logo" translatesAutoresizingMaskIntoConstraints="NO" id="eta-Jg-fRy">
+                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999973" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="imdb-logo" translatesAutoresizingMaskIntoConstraints="NO" id="eta-Jg-fRy">
                                 <rect key="frame" x="40" y="100" width="240" height="100"/>
                             </imageView>
                         </subviews>
@@ -289,6 +289,9 @@
                                     <constraint firstAttribute="bottom" secondItem="RdU-rU-5iZ" secondAttribute="bottom" id="TIW-py-VPM"/>
                                     <constraint firstAttribute="centerX" secondItem="RdU-rU-5iZ" secondAttribute="centerX" id="aFk-4c-Id1"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="7yL-Zu-Q5L" id="ClL-zp-Qio"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -391,11 +394,11 @@
             </objects>
             <point key="canvasLocation" x="-228.75" y="-19.014084507042252"/>
         </scene>
-        <!--Search-->
+        <!--Navigation Controller-->
         <scene sceneID="V1d-jN-zMV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="n1Z-yB-KZY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="t0x-1g-2yA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -410,11 +413,11 @@
             </objects>
             <point key="canvasLocation" x="750" y="-321"/>
         </scene>
-        <!--Bookmarks-->
+        <!--Navigation Controller-->
         <scene sceneID="rQx-CY-SOs">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Zo5-sw-hUB" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Bookmarks" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" systemItem="bookmarks" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QwI-r6-aDO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -432,11 +435,10 @@
     </scenes>
     <resources>
         <image name="bookmarked-bookmark" width="18" height="48"/>
-        <image name="first" width="30" height="30"/>
         <image name="imdb-logo" width="122" height="52"/>
-        <image name="second" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ra5-0S-a87"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
 </document>
