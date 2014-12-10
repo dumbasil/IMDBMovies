@@ -30,6 +30,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 @implementation SearchViewController {
     
     Search *_search;
+    CGPoint _restoreContentOffset;
     
 }
 
@@ -44,7 +45,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     self.tableView.separatorColor = [UIColor clearColor];
 
     [self showIMDBLogo];
-    [self.searchBar becomeFirstResponder];
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapReceived:)];
     [tapGestureRecognizer setDelegate:self];
@@ -58,6 +58,18 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     cellNib = [UINib nibWithNibName:LoadingCellIdentifier bundle:nil];
     [self.tableView registerNib:cellNib forCellReuseIdentifier:LoadingCellIdentifier];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapOnTableView:)];
+    tap.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:tap];
+    
+}
+
+- (void)didTapOnTableView:(UIGestureRecognizer*)tap {
+    
+    if ([self.searchBar isFirstResponder]) {
+        [self.searchBar resignFirstResponder];
+    }
     
 }
 
@@ -78,11 +90,24 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     CGFloat goalY = CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f;
     
-    [UIView animateWithDuration:0.5 animations:^{
-        self.logo.center = CGPointMake(self.logo.center.x, goalY);
-    } completion:^(BOOL finished) {
-        self.logo.hidden = YES;
-    }];
+    CABasicAnimation *logoMover = [CABasicAnimation animationWithKeyPath:@"position"];
+    logoMover.fillMode = kCAFillModeForwards;
+    logoMover.duration = 0.5;
+    logoMover.fromValue = [NSValue valueWithCGPoint:self.logo.center];
+    
+    self.logo.center = CGPointMake(self.logo.center.x, CGRectGetMaxY(self.view.frame) + self.logo.frame.size.height / 2.0f);
+    
+    logoMover.toValue = [NSValue valueWithCGPoint:CGPointMake(self.logo.center.x, goalY)];
+    logoMover.delegate = self;
+    logoMover.removedOnCompletion = NO;
+    [self.logo.layer addAnimation:logoMover forKey:@"logoMover"];
+    
+}
+
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+
+    
+    self.logo.hidden = YES;
     
 }
 
@@ -195,6 +220,10 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         cell.movieDescription.text = @"";
     }
     
+    cell.layer.cornerRadius = 10.0;
+    cell.layer.masksToBounds = YES;
+    cell.clipsToBounds = YES;
+    
     if (![searchResult.poster isEqualToString:@"N/A"]) {
         [cell.moviePoster setImageWithURL:[NSURL URLWithString:searchResult.poster]];
     } else {
@@ -205,16 +234,19 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     
     if ([self checkMovieInBookmarksWithId:searchResult.movieId]) {
         cell.bookmarkImage.hidden = NO;
-    } 
+    }
+    
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor colorWithRed:0.500 green:0.000 blue:0.500 alpha:0.300];
+    cell.selectedBackgroundView = view;
+    
+    cell.maskView.layer.zPosition = 999;
+    cell.moviePoster.layer.zPosition = 0;
     
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(iOS8_0)) {
-        return [self tableView:tableView estimatedHeightForRowAtIndexPath:indexPath];
-    }
     
     id cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
@@ -224,9 +256,10 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         
         CGFloat cellHeight = 0;
         
-        CGSize idealSize = [searchResultCell.movieDescription sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
+        CGSize idealSize1 = [searchResultCell.movieName sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
+        CGSize idealSize2 = [searchResultCell.movieDescription sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
         
-        cellHeight = 12.0f + searchResultCell.movieName.frame.size.height + 9.0f + searchResultCell.countryYear.frame.size.height + 10.0f + searchResultCell.moviePoster.frame.size.height + 10.0f + idealSize.height + 24.0f +8.0f;
+        cellHeight = 12.0f + idealSize1.height + 9.0f + searchResultCell.countryYear.frame.size.height + 10.0f + searchResultCell.moviePoster.frame.size.height + 10.0f + idealSize2.height + 24.0f + 8.0f;
         
         return cellHeight;
         
@@ -235,13 +268,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     }
     
 }
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return UITableViewAutomaticDimension;
-    
-}
-
 
 -(BOOL)checkMovieInBookmarksWithId:(NSString*)movieId {
     
@@ -264,8 +290,10 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([_search.searchResults count] > 0) {
+
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
         [self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+        
     }
     
 }
@@ -295,6 +323,8 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         
         movieDetailController.managedObjectContext = self.managedObjectContext;
         movieDetailController.fetchedResultsController = self.fetchedResultsController;
+        
+        self.tableView.contentOffset = _restoreContentOffset;
         
     }
     

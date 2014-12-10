@@ -51,7 +51,6 @@ static NSOperationQueue *queue = nil;
  
     NSArray *array = searchResultsDictionary[@"Search"];
     if (array == nil) {
-        NSLog(@"Expected 'Search' array");
         [self.delegate didReceieveNewSearchResult];
         return;
     }
@@ -66,8 +65,6 @@ static NSOperationQueue *queue = nil;
 }
 
 - (void)parseDictionary:(NSDictionary *)dictionary {
-    
-    NSLog(@"%@", dictionary);
     
     SearchResult *searchResult = [[SearchResult alloc] init];
     
@@ -118,11 +115,21 @@ static NSOperationQueue *queue = nil;
             
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-            NSLog(@"First request failed %@", error);
             if (!operation.isCancelled) {
                 self.isLoading = NO;
+            } else {
+                
+                self.isLoading = NO;
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                                                                message:@"Either your device is not connected to the Internet or IMDb server is not responding"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                [self.delegate didReceieveNewSearchResult];
             }
-            
+        
         }];
         
         [queue addOperation:operation];
@@ -139,13 +146,20 @@ static NSOperationQueue *queue = nil;
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     operation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"Second request succeeded!");
+
         [self parseDictionary:responseObject];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"Second request failed: %@", error);
+        self.isLoading = NO;
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Network Error"
+                                                        message:@"Either your device is not connected to the Internet or IMDb server is not responding"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        [self.delegate didReceieveNewSearchResult];
         
     }];
     

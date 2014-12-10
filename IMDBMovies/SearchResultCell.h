@@ -15,5 +15,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *moviePoster;
 @property (nonatomic, weak) IBOutlet UILabel *movieDescription;
 @property (nonatomic, weak) IBOutlet UIImageView *bookmarkImage;
+@property (nonatomic, weak) IBOutlet UIView *maskView;
 
 @end

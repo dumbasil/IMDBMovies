@@ -37,7 +37,6 @@ NSString * const ManagedObjectContextSaveDidFailNotification = @"ManagedObjectCo
     UITabBarController *tabBarController = (UITabBarController*)self.window.rootViewController;
     
     [[UITabBar appearance] setTintColor:[UIColor purpleColor]];
-    //[[UITabBar appearance] setBarTintColor:[UIColor yellowColor]];
     [[UIAlertView appearance] setTintColor:[UIColor purpleColor]];
     
     UINavigationController *firstNavigationController = (UINavigationController*)tabBarController.viewControllers[0];

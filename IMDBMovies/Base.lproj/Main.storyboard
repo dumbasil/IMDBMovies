@@ -434,7 +434,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bookmarked-bookmark" width="18" height="48"/>
+        <image name="bookmarked-bookmark" width="9" height="24"/>
         <image name="imdb-logo" width="122" height="52"/>
     </resources>
     <inferredMetricsTieBreakers>

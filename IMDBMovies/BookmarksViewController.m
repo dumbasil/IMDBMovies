@@ -40,6 +40,8 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     
 }
 
+
+
 -(void)viewWillAppear:(BOOL)animated {
     
     [self.tableView reloadData];
@@ -129,14 +131,13 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         cell.movieDescription.text = @"";
     }
     
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor colorWithRed:0.500 green:0.000 blue:0.500 alpha:0.300];
+    cell.selectedBackgroundView = view;
     
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(iOS8_0)) {
-        return [self tableView:tableView estimatedHeightForRowAtIndexPath:indexPath];
-    }
     
     id cell = [self tableView:tableView cellForRowAtIndexPath:indexPath];
     
@@ -146,21 +147,16 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         
         CGFloat cellHeight = 0;
         
-        CGSize idealSize = [searchResultCell.movieDescription sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
+        CGSize idealSize1 = [searchResultCell.movieName sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
+        CGSize idealSize2 = [searchResultCell.movieDescription sizeThatFits:CGSizeMake(tableView.frame.size.width - 16.0f, MAXFLOAT)];
         
-        cellHeight = 12.0f + searchResultCell.movieName.frame.size.height + 9.0f + searchResultCell.countryYear.frame.size.height + 10.0f + searchResultCell.moviePoster.frame.size.height + 10.0f + idealSize.height + ([searchResultCell.movieDescription.text length] > 0 ? 24.0f : 0.0f) +8.0f;
+        cellHeight = 12.0f + idealSize1.height + 9.0f + searchResultCell.countryYear.frame.size.height + 10.0f + searchResultCell.moviePoster.frame.size.height + 10.0f + idealSize2.height + ([searchResultCell.movieDescription.text length] > 0 ? 24.0f : 0.0f) +8.0f;
         
         return cellHeight;
         
     } else {
         return 44.0;
     }
-    
-}
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return UITableViewAutomaticDimension;
     
 }
 
