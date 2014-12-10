@@ -12,6 +12,7 @@
 #import "SearchResult.h"
 #import "MovieDetailController.h"
 #import "Movie.h"
+#import "UIImage+ColoredImage.h"
 #import <AFNetworking/UIImageView+AFNetworking.h>
 #import <CoreData/CoreData.h>
 
@@ -30,7 +31,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 @implementation SearchViewController {
     
     Search *_search;
-    CGPoint _restoreContentOffset;
     
 }
 
@@ -229,6 +229,8 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     } else {
         [cell.moviePoster setImage:[UIImage imageNamed:@"poster-placeholder"]];
     }
+    
+    cell.moviePoster.highlightedImage = [UIImage colorizeImage:cell.moviePoster.image withColor:[UIColor colorWithRed:0.913 green:0.544 blue:1.000 alpha:1.000]];
 
     cell.bookmarkImage.hidden = YES;
     
@@ -239,9 +241,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = [UIColor colorWithRed:0.500 green:0.000 blue:0.500 alpha:0.300];
     cell.selectedBackgroundView = view;
-    
-    cell.maskView.layer.zPosition = 999;
-    cell.moviePoster.layer.zPosition = 0;
     
 }
 
@@ -323,8 +322,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         
         movieDetailController.managedObjectContext = self.managedObjectContext;
         movieDetailController.fetchedResultsController = self.fetchedResultsController;
-        
-        self.tableView.contentOffset = _restoreContentOffset;
         
     }
     

@@ -10,6 +10,7 @@
 #import "Movie.h"
 #import "SearchResultCell.h"
 #import "MovieDetailController.h"
+#import "UIImage+ColoredImage.h"
 
 static NSString * const SearchResultCellIdentifier = @"SearchResultCell";
 static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
@@ -125,6 +126,8 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         [cell.moviePoster setImage:[UIImage imageNamed:@"poster-placeholder"]];
     }
     
+    cell.moviePoster.highlightedImage = [UIImage colorizeImage:cell.moviePoster.image withColor:[UIColor colorWithRed:0.913 green:0.544 blue:1.000 alpha:1.000]];
+    
     if (![movie.movieDescription isEqualToString:@"N/A"]) {
         cell.movieDescription.text = movie.movieDescription;
     } else {
@@ -174,7 +177,7 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([segue.identifier isEqualToString:@"ShowBookmarkDetails"]) {
-        
+
         MovieDetailController *movieDetailController = segue.destinationViewController;
         movieDetailController.hidesBottomBarWhenPushed = YES;
         
