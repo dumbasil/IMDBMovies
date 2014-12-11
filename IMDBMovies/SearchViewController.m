@@ -119,7 +119,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 -(void)viewWillAppear:(BOOL)animated {
     
     [[self navigationController] setNavigationBarHidden:YES animated:NO];
-    //[self.tableView reloadData];
+    [self.tableView reloadData];
     
 }
 
