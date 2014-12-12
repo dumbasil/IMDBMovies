@@ -216,13 +216,22 @@
         
         MFMailComposeViewController *controller = [[MFMailComposeViewController alloc] init];
         
-        if (controller != nil) {
+        if (controller != nil && [MFMailComposeViewController canSendMail]) {
             controller.mailComposeDelegate = self;
             controller.modalPresentationStyle = UIModalPresentationFormSheet;
             [controller setMessageBody:shareText isHTML:NO];
             [controller setToRecipients:@[@"your@email-address-here.com"]];
             
             [self presentViewController:controller animated:YES completion:nil];
+        } else {
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Mail"
+                                                            message:@"Mail service is not available on your device."
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+
         }
         
     } else if (buttonIndex == 3) {
