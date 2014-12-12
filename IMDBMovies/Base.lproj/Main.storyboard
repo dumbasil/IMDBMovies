@@ -101,10 +101,10 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DDn-xi-sD5">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DDn-xi-sD5">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RdU-rU-5iZ" userLabel="contentView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdU-rU-5iZ" userLabel="contentView">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="361"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Movie Title]" lineBreakMode="middleTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJm-6c-4b8">
@@ -224,10 +224,11 @@
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UMg-Xz-UNz">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UMg-Xz-UNz">
                                                 <rect key="frame" x="9" y="282" width="302" height="69"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="302" id="6Q4-Ut-RZv"/>
+                                                    <constraint firstAttribute="height" priority="500" constant="69" id="AuU-fe-iCB"/>
                                                     <constraint firstAttribute="height" constant="69" id="QSa-k0-dAf"/>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="69" id="sgN-df-r51"/>
                                                 </constraints>
@@ -293,8 +294,15 @@
                                 <constraints>
                                     <constraint firstItem="RdU-rU-5iZ" firstAttribute="top" secondItem="DDn-xi-sD5" secondAttribute="top" id="EoV-gO-9JS"/>
                                     <constraint firstAttribute="bottom" secondItem="RdU-rU-5iZ" secondAttribute="bottom" id="TIW-py-VPM"/>
+                                    <constraint firstAttribute="trailing" secondItem="RdU-rU-5iZ" secondAttribute="trailing" priority="250" id="Y5j-Ho-81E"/>
+                                    <constraint firstAttribute="width" constant="320" id="YVT-q8-WlQ"/>
                                     <constraint firstAttribute="centerX" secondItem="RdU-rU-5iZ" secondAttribute="centerX" id="aFk-4c-Id1"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="YVT-q8-WlQ"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="7yL-Zu-Q5L" id="ClL-zp-Qio"/>
                                 </connections>
