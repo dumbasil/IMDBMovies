@@ -202,7 +202,8 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 }
 
 -(void)configureCell:(SearchResultCell*)cell forSearchResult:(SearchResult*)searchResult {
-
+    
+    //cell.movieName.preferredMaxLayoutWidth =
     cell.movieName.text = searchResult.title;
     
     NSString *firstInformationPart = [searchResult.country isEqualToString:@"N/A"] ? @"" : [searchResult.country stringByAppendingString:@" - "];
