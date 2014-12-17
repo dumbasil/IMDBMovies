@@ -93,8 +93,8 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
     if ([[self.fetchedResultsController fetchedObjects] count] > 0) {
         
         SearchResultCell *cell = (SearchResultCell *)[tableView dequeueReusableCellWithIdentifier:SearchResultCellIdentifier];
-        cell.layer.borderColor = [UIColor blackColor].CGColor;
-        cell.layer.borderWidth = 1.0f;
+        cell.layer.borderColor = [UIColor purpleColor].CGColor;
+        cell.layer.borderWidth = 2.0f;
         
         Movie *movie = [self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
         [self configureCell:cell forBookmark:movie];
@@ -126,7 +126,7 @@ static NSString * const NoBookmarksCellIdentifier = @"NoBookmarksCell";
         [cell.moviePoster setImage:[UIImage imageNamed:@"poster-placeholder"]];
     }
     
-    cell.moviePoster.highlightedImage = [UIImage colorizeImage:cell.moviePoster.image withColor:[UIColor colorWithRed:0.913 green:0.544 blue:1.000 alpha:1.000]];
+    //cell.moviePoster.highlightedImage = [UIImage colorizeImage:cell.moviePoster.image withColor:[UIColor colorWithRed:0.913 green:0.544 blue:1.000 alpha:1.000]];
     
     if (![movie.movieDescription isEqualToString:@"N/A"]) {
         cell.movieDescription.text = movie.movieDescription;

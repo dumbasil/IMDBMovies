@@ -119,26 +119,40 @@
     self.movieType.text = [self.movieTypeValue isEqualToString:@"N/A"] ? @"unknown" : self.movieTypeValue;
     self.movieDescription.text = [self.movieDescriptionValue isEqualToString:@"N/A"] ? @"No description" : self.movieDescriptionValue;
     
-    dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
-    dispatch_async(myQueue, ^{
+    if (!self.poster) {
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_queue_t myQueue = dispatch_queue_create("My Queue",NULL);
+        dispatch_async(myQueue, ^{
             
-            CGFloat imageWidth = self.poster.size.width;
-            CGFloat imageHeight = self.poster.size.height;
+            self.poster = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.posterUrlString]]];
             
-            CGFloat ratio = self.moviePoster.frame.size.width / imageWidth;
-            CGFloat newImageViewHeight = (int)(imageHeight * ratio);
-            
-            CGRect newImageRect = self.moviePoster.frame;
-            newImageRect.size.height = newImageViewHeight;
-            self.moviePoster.frame = newImageRect;
-            
-            [self.moviePoster setImage:self.poster];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self fillImageViewWithImage];
+                
+            });
             
         });
-    });
+        
+    } else {
+        [self fillImageViewWithImage];
+    }
 
+}
+
+-(void)fillImageViewWithImage {
+    
+    CGFloat imageWidth = self.poster.size.width;
+    CGFloat imageHeight = self.poster.size.height;
+    
+    CGFloat ratio = self.moviePoster.frame.size.width / imageWidth;
+    CGFloat newImageViewHeight = (int)(imageHeight * ratio);
+    
+    CGRect newImageRect = self.moviePoster.frame;
+    newImageRect.size.height = newImageViewHeight;
+    self.moviePoster.frame = newImageRect;
+    
+    [self.moviePoster setImage:self.poster];
     
 }
 

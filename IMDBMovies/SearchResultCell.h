@@ -16,4 +16,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *movieDescription;
 @property (nonatomic, weak) IBOutlet UIImageView *bookmarkImage;
 
+@property (nonatomic, assign) UIImage* unscaledImage;
+
 @end

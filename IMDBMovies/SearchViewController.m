@@ -203,7 +203,6 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 -(void)configureCell:(SearchResultCell*)cell forSearchResult:(SearchResult*)searchResult {
     
-    //cell.movieName.preferredMaxLayoutWidth =
     cell.movieName.text = searchResult.title;
     
     NSString *firstInformationPart = [searchResult.country isEqualToString:@"N/A"] ? @"" : [searchResult.country stringByAppendingString:@" - "];
@@ -231,7 +230,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         [cell.moviePoster setImage:[UIImage imageNamed:@"poster-placeholder"]];
     }
     
-    cell.moviePoster.highlightedImage = [UIImage colorizeImage:cell.moviePoster.image withColor:[UIColor colorWithRed:0.913 green:0.544 blue:1.000 alpha:1.000]];
+    //cell.moviePoster.highlightedImage = [UIImage colorizeImage:cell.moviePoster.image withColor:[UIColor colorWithRed:0.913 green:0.544 blue:1.000 alpha:1.000]];
 
     cell.bookmarkImage.hidden = YES;
     
@@ -290,9 +289,9 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([_search.searchResults count] > 0) {
-
         [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-        [self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+        //[self performSegueWithIdentifier:@"ShowMovieDetails" sender:_search.searchResults[indexPath.section]];
+        [self performSegueWithIdentifier:@"ShowMovieDetails" sender:indexPath];
         
     }
     
@@ -305,7 +304,8 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         MovieDetailController *movieDetailController = segue.destinationViewController;
         movieDetailController.hidesBottomBarWhenPushed = YES;
         
-        SearchResult *currentSearchResult = (SearchResult*)sender;
+        NSIndexPath *indexPath = (NSIndexPath*)sender;
+        SearchResult *currentSearchResult = (SearchResult*)_search.searchResults[indexPath.section];
         movieDetailController.title = currentSearchResult.title;
         movieDetailController.movieTitleValue = currentSearchResult.title;
         movieDetailController.movieRatingValue = currentSearchResult.rating;
@@ -313,7 +313,8 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
         movieDetailController.movieWritersValue = currentSearchResult.writer;
         movieDetailController.movieTypeValue = currentSearchResult.type;
         movieDetailController.movieDescriptionValue = currentSearchResult.plot;
-        movieDetailController.poster = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:currentSearchResult.poster]]];;
+        movieDetailController.posterUrlString = currentSearchResult.poster;
+        
         movieDetailController.movieId = currentSearchResult.movieId;
         movieDetailController.movieCountryValue = currentSearchResult.country;
         movieDetailController.movieYearValue = currentSearchResult.year;

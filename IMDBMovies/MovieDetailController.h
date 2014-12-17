@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSString *movieTypeValue;
 @property (nonatomic, strong) NSString *movieDescriptionValue;
 @property (nonatomic, strong) UIImage *poster;
+@property (nonatomic, strong) NSString *posterUrlString;
 @property (nonatomic, strong) NSString *movieId;
 
 @property (nonatomic, strong) NSString *movieCountryValue;
