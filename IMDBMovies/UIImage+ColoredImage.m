@@ -32,7 +32,7 @@
     // set a mask that matches the shape of the image, then draw (color burn) a colored rectangle
     CGContextClipToMask(context, rect, img.CGImage);
     CGContextAddRect(context, rect);
-    CGContextDrawPath(context,kCGPathFill);
+    CGContextDrawPath(context ,kCGPathFill);
     
     // generate a new UIImage from the graphics context we drew onto
     UIImage *coloredImg = UIGraphicsGetImageFromCurrentImageContext();

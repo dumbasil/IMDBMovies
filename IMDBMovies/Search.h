@@ -10,7 +10,7 @@
 
 @protocol SearchDelegate <NSObject>
 
--(void)didReceieveNewSearchResult;
+-(void)didReceiveNewSearchResult;
 
 @end
 

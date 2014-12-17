@@ -377,7 +377,7 @@ static NSString * const LoadingCellIdentifier = @"LoadingCell";
 
 #pragma mark - SearchDelegate
 
--(void)didReceieveNewSearchResult {
+-(void)didReceiveNewSearchResult {
 
     [self.tableView reloadData];
     

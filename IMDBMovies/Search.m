@@ -51,7 +51,7 @@ static NSOperationQueue *queue = nil;
  
     NSArray *array = searchResultsDictionary[@"Search"];
     if (array == nil) {
-        [self.delegate didReceieveNewSearchResult];
+        [self.delegate didReceiveNewSearchResult];
         return;
     }
     
@@ -85,7 +85,7 @@ static NSOperationQueue *queue = nil;
         searchResult.type = dictionary[@"Type"];
         
         [self.searchResults addObject:searchResult];
-        [self.delegate didReceieveNewSearchResult];
+        [self.delegate didReceiveNewSearchResult];
         
     }
     
@@ -127,7 +127,7 @@ static NSOperationQueue *queue = nil;
                                                       cancelButtonTitle:@"OK"
                                                       otherButtonTitles:nil];
                 [alert show];
-                [self.delegate didReceieveNewSearchResult];
+                [self.delegate didReceiveNewSearchResult];
             }
         
         }];
@@ -159,7 +159,7 @@ static NSOperationQueue *queue = nil;
                                               cancelButtonTitle:@"OK"
                                               otherButtonTitles:nil];
         [alert show];
-        [self.delegate didReceieveNewSearchResult];
+        [self.delegate didReceiveNewSearchResult];
         
     }];
     
